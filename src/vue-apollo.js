@@ -4,7 +4,7 @@ import {
     createApolloClient,
     restartWebsockets
 } from "vue-cli-plugin-apollo/graphql-client";
-import { URL_APICHAVEZ } from "./Configuracion";
+import { URL_API_CAC } from "./Configuracion";
 
 // Install the vue plugin
 Vue.use(VueApollo);
@@ -14,7 +14,7 @@ const AUTH_TOKEN = "apollo-token";
 
 // Http endpoint
 const httpEndpoint =
-    process.env.VUE_APP_GRAPHQL_HTTP || URL_APICHAVEZ;
+    process.env.VUE_APP_GRAPHQL_HTTP || URL_API_CAC;
 // Files URL root
 export const filesRoot =
     process.env.VUE_APP_FILES_ROOT ||

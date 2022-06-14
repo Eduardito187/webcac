@@ -26,7 +26,7 @@
 <script>
 const axios = require("axios");
 import gql from "graphql-tag";
-import {URL_APICHAVEZ} from "./../Configuracion";
+import {URL_API_CAC} from "./../Configuracion";
 
 export default {
   name: "login",
@@ -76,7 +76,7 @@ export default {
     },
   },
   created() {
-    document.title = "Chavez | Login";
+    document.title = "CAC | Login";
   },
   mounted() {
     if (localStorage.id_cuenta != null) {

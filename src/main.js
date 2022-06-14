@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { URL_SIS_CAC } from "./Configuracion";
+import { URL_API_CAC } from "./Configuracion";
 import { createProvider } from "./vue-apollo";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
