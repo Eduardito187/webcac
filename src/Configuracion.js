@@ -1,2 +1,2 @@
-export let URL_APICHAVEZ = "http://cac.grazcompany.com";
+export let URL_API_CAC = "http://cac.grazcompany.com";
 export let Gestion = 22;
