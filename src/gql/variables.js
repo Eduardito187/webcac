@@ -16,14 +16,14 @@ export const PerfilHeader = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
 	  ID
-    Foto {
+    FotoR {
       ID
       URL
       Direcicon
       Formato
       Peso
     }
-    Policia {
+    PoliciaR {
       ID
       Nombre
       Paterno
@@ -33,7 +33,7 @@ query Usuario($ID:Int!){
       CI
       Nacimiento
     }
-    Rangos {
+    RangoUsuario {
       ID
       Rango {
         ID
@@ -46,7 +46,7 @@ export const CuentaPermiso = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
 	  ID
-    Rangos {
+    RangoUsuario {
       ID
       Rango {
         ID

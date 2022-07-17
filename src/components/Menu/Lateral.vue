@@ -2,7 +2,7 @@
     <div class="Lateral">
         <a-spin tip="Carcango..." :spinning="Cargando">
             <a-menu theme="light" mode="inline">
-                <a-menu-item v-if="DATA!=null" v-for="i in DATA.Rangos" :key="i.ID">
+                <a-menu-item v-if="DATA!=null" v-for="i in DATA.RangoUsuario" :key="i.ID">
                     <span>{{i.Rango.Rango}}</span>
                 </a-menu-item>
             </a-menu>

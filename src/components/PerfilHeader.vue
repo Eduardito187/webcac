@@ -4,8 +4,8 @@
             <a-dropdown v-if="DATA!=null" placement="bottomRight">
                 <template :style="{display:'flex'}">
                     <div>
-                        <a-avatar :size="40" :src="DATA.Foto.URL" /> 
-                        <strong :style="{fontSize:'20px',lineHeigth:'40px'}">{{DATA.Policia.Nombre + ' ' + DATA.Policia.Paterno + '' + DATA.Policia.Materno}}</strong>
+                        <a-avatar :size="40" :src="DATA.FotoR.URL" /> 
+                        <strong :style="{fontSize:'20px',lineHeigth:'40px'}">{{DATA.PoliciaR.Nombre + ' ' + DATA.PoliciaR.Paterno + '' + DATA.PoliciaR.Materno}}</strong>
                     </div>
                 </template>
                 <a-menu slot="overlay">
