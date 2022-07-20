@@ -169,7 +169,10 @@ label {
     font-size: 17px;
 }
 
-
+.ant-btn-primary {
+    background-color: #9B933B !important;
+    border-color: #9B933B !important;
+}
 /* Change the color of links on hover */
 
 .topnav a:hover {

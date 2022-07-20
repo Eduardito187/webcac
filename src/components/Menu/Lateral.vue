@@ -2,6 +2,14 @@
     <div class="Lateral">
         <a-spin tip="Carcango..." :spinning="Cargando">
             <a-menu theme="light" mode="inline">
+                <a-menu-item key="1">
+                    <a-icon type="dashboard" />
+                    <span>Panel de Control</span>
+                </a-menu-item>
+                <a-menu-item key="2" @click="AccederURL('/ListaUsuario')">
+                    <a-icon type="user" />
+                    <span>Usuarios</span>
+                </a-menu-item>
                 <a-menu-item v-if="DATA!=null" v-for="i in DATA.RangoUsuario" :key="i.ID">
                     <span>{{i.Rango.Rango}}</span>
                 </a-menu-item>
@@ -23,6 +31,9 @@ export default {
     },
     components:{},
     methods:{
+        AccederURL (a){
+            this.$router.push(a);
+        },
         async obtenerData(){
             await this.$apollo.query({query: CuentaPermiso,variables: {ID:parseInt(this.id_cuenta)},fetchPolicy: "network-only"}).then(result => {
                 this.DATA = result.data.Usuario;

@@ -4,6 +4,8 @@ import Login from "./views/Login.vue";
 import Inicio from "./views/Inicio.vue";
 import V404 from "./views/V404";
 import Localidad from "./views/Localidad.vue";
+import ListaUsuario from "./views/Usuarios/ListaUsuario.vue";
+import VistaUsuario from "./views/Usuarios/VistaUsuario.vue";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -32,6 +34,17 @@ export default new Router({
             path: "/Localidad",
             name: "LOCALIDAD",
             component: Localidad
+        },
+        {
+            path: "/ListaUsuario",
+            name: "LISTAUSUARIO",
+            component: ListaUsuario
+        },
+        {
+            path: "/VistaUsuario/:ID",
+            name: "VISTAUSUARIO",
+            component: VistaUsuario,
+            props: true
         }
     ],
     linkActiveClass: "active"
