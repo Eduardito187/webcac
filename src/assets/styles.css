@@ -73,7 +73,9 @@ label {
 .forgot-password a {
     color: #2554FF;
 }
-
+.TextoBold{
+    font-weight: 700;
+}
 .social-icons {
     text-align: center;
     font-family: "Open Sans";

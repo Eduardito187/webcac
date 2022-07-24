@@ -6,7 +6,11 @@
                     <a-icon type="dashboard" />
                     <span>Panel de Control</span>
                 </a-menu-item>
-                <a-menu-item key="2" @click="AccederURL('/ListaUsuario')">
+                <a-menu-item key="2" @click="AccederURL('/ListaRoles')">
+                    <a-icon type="security-scan" />
+                    <span>Rol</span>
+                </a-menu-item>
+                <a-menu-item key="3" @click="AccederURL('/ListaUsuario')">
                     <a-icon type="user" />
                     <span>Usuarios</span>
                 </a-menu-item>
@@ -50,5 +54,4 @@ export default {
         }
     },
 };
-</script>
 </script>

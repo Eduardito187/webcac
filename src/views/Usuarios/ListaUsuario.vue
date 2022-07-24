@@ -1,22 +1,21 @@
 <template>
     <div class="ListaUsuario">
-        <HeaderListaVue />
+        <HeaderListaUsuario />
     </div>
 </template>
 <script>
 import gql from "graphql-tag";
-import HeaderListaVue from "./Componente/HeaderLista.vue";
+import HeaderListaUsuario from "./Componente/HeaderListaUsuario.vue";
 export default {
     name: "ListaUsuario",
     data() {
         return {
         }
     },
-    components:{HeaderListaVue},
+    components:{HeaderListaUsuario},
     methods:{
     },
     created() {
     },
 };
-</script>
 </script>

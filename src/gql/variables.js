@@ -16,23 +16,59 @@ export const PerfilHeader = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
 	  ID
-    FotoR {
+    Usuario
+	  PoliciaR {
+	    ID
+	    Nombre
+	    Paterno
+	    Materno
+	    Correo
+	    Telefono
+	    CI
+	    Nacimiento
+	  }
+	  FotoR {
+	    ID
+	    URL
+	  }
+	  Escalafon
+	  JerarquiaR {
+	    ID
+	    Grado
+	  }
+    RangoUsuario {
       ID
-      URL
-      Direcicon
-      Formato
-      Peso
+      Rango {
+        ID
+        Rango
+      }
     }
-    PoliciaR {
-      ID
-      Nombre
-      Paterno
-      Materno
-      Correo
-      Telefono
-      CI
-      Nacimiento
-    }
+	}
+}`;
+export const GetUserList = gql`
+query Usuarios{
+	Usuarios{
+	  ID
+    Usuario
+	  PoliciaR {
+	    ID
+	    Nombre
+	    Paterno
+	    Materno
+	    Correo
+	    Telefono
+	    CI
+	    Nacimiento
+	  }
+	  FotoR {
+	    ID
+	    URL
+	  }
+	  Escalafon
+	  JerarquiaR {
+	    ID
+	    Grado
+	  }
     RangoUsuario {
       ID
       Rango {
@@ -55,3 +91,11 @@ query Usuario($ID:Int!){
     }
 	}
 }`;
+export const GetRoles = gql`
+query Rangos{
+  Rangos {
+	  ID
+	  Rango
+	}
+}
+`;

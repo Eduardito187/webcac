@@ -1,13 +1,8 @@
 <template>
-    <div class="HeaderLista">
+    <div class="ListaRol">
         <a-row>
             <a-col :span="18">
-                <a-button type="primary" icon="user" size="large">
-                    Nuevo Usuario
-                </a-button>
-                <a-button type="primary" style="margin-left:10px;" icon="branches" size="large">
-                    Nuevo Rol
-                </a-button>
+                <NewRol />
             </a-col>
             <a-col :span="6">
                 <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />
@@ -28,64 +23,47 @@
                     <a-table
                     :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                     :columns="columns"
-                    :data-source="data"
+                    :data-source="roles"
                     />
             </a-col>
         </a-row>
     </div>
 </template>
 <script>
-const columns = [
-  {
-    title: 'Grado',
-    dataIndex: 'Grado',
-  },
-  {
-    title: 'Nombre',
-    dataIndex: 'Nombre',
-  },
-  {
-    title: 'Apellidos',
-    dataIndex: 'Apellidos',
-  },
-  {
-    title: 'Escalafon',
-    dataIndex: 'Escalafon',
-  },
-  {
-    title: 'Telefono',
-    dataIndex: 'Telefono',
-  },
-  {
-    title: 'Rango',
-    dataIndex: 'Rango',
-  },
-  {
-    title: 'Estado',
-    dataIndex: 'Estado',
-  }
-];
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
-import gql from "graphql-tag";
+import {GetRoles} from "./../../../gql/variables";
+import NewRol from "./NewRol.vue";
 export default {
-    name: "HeaderLista",
+    name: "ListaRol",
     data() {
         return {
-            data,
-            columns,
+            roles:[],
+            columns:[
+                {
+                    title: 'ID',
+                    dataIndex: 'ID',
+                },
+                {
+                    title: 'Rango',
+                    dataIndex: 'Rango',
+                },
+                {
+                    title: 'Accion',
+                    dataIndex: 'ID',
+                    key: 'ID+"p"',
+                    customRender: (text, row, index) => {
+                        return (
+                            <a-button type="primary" icon="edit" onClick={()=>this.AccionEdit(text)}>
+                                Editar
+                            </a-button>
+                        );
+                    }
+                }
+            ],
             selectedRowKeys: [],
             loading: false,
         }
     },
-    components:{},
+    components:{NewRol},
     computed: {
         hasSelected() {
             return this.selectedRowKeys.length > 0;
@@ -107,9 +85,22 @@ export default {
             console.log('selectedRowKeys changed: ', selectedRowKeys);
             this.selectedRowKeys = selectedRowKeys;
         },
+        async GetRolesAPI(){
+            await this.$apollo.query({
+                query: GetRoles,
+                fetchPolicy: "network-only"
+            }).then(result => {
+                if (result.data.Rangos != null) {
+                    this.roles=result.data.Rangos;
+                }
+            });
+        },
+        AccionEdit(ID){
+            alert(ID);
+        }
     },
     created() {
+        this.GetRolesAPI();
     },
 };
-</script>
 </script>

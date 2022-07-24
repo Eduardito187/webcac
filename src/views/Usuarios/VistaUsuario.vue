@@ -1,10 +1,45 @@
 <template>
     <div class="VistaUsuario">
         <a-row>
+            <a-col :span="24" style="position:relative;margin-bottom: 85px;">
+                <a-col :span="24">
+                    <div style="background-color: #808080;width:100%;height:200px;border-radius: 10px;" />
+                </a-col>
+                <div v-if="Usuario!=null" style="position:absolute;left:10px;top:125px;z-index:100;">
+                    <FotoCircular v-if="Usuario.FotoR!=null" :foto="Usuario.FotoR.URL" ancho="150" />
+                </div>
+                <div v-if="Usuario!=null" style="position:absolute;left:170px;top:200px;z-index:100;">
+                    <h1 class="TextoBold" v-if="Usuario.PoliciaR!=null">{{Usuario.PoliciaR.Nombre+" "+Usuario.PoliciaR.Paterno+" "+Usuario.PoliciaR.Materno}}</h1>
+                </div>
+                <div v-if="Usuario!=null" style="position:absolute;right:10px;top:200px;z-index:100;">
+                    <h1 class="TextoBold">Editar : <a-switch :checked="false" @change="onChange" /></h1>
+                </div>
+            </a-col>
+            <a-col :span="24">
+                <a-col :span="18" style="padding:5px;">
+                    <a-card v-if="Usuario!=null" :bordered="true" style="width: 100%;">
+                        <h6 class="TextoBold" v-if="Usuario.Jerarquia!=null">Grado : {{Usuario.Jerarquia.Grado}}</h6>
+                        <h6 class="TextoBold" v-if="Usuario.Escalafon!=null">Escalafon : {{Usuario.Escalafon}}</h6>
+                        <h6 class="TextoBold">Nombre : {{Usuario.PoliciaR.Nombre}}</h6>
+                        <h6 class="TextoBold">Apellidos : {{Usuario.PoliciaR.Paterno+" "+Usuario.PoliciaR.Materno}}</h6>
+                        <h6 class="TextoBold">CI : {{Usuario.PoliciaR.CI}}</h6>
+                        <h6 class="TextoBold">Fecha de nacimiento : {{Usuario.PoliciaR.Nacimiento}}</h6>
+                    </a-card>
+                </a-col>
+                <a-col :span="6" style="padding:5px;">
+                    <a-card v-if="Usuario.PoliciaR!=null" title="Infromacion de contacto:" :bordered="true" style="width: 100%;margin-bottom: 10px;">
+                        <h6 class="TextoBold">Correo : {{Usuario.PoliciaR.Correo}}</h6>
+                        <h6 class="TextoBold">Telefono : {{Usuario.PoliciaR.Telefono}}</h6>
+                    </a-card>
+                    <a-card v-if="Usuario.RangoUsuario!=null" title="Credenciales:" :bordered="true" style="width: 100%;">
+                        <h6 class="TextoBold">
+                            Rangos : <RangosUser :Rangos="Usuario.RangoUsuario" />
+                        </h6>
+                        <h6 class="TextoBold">Usuario : {{Usuario.Usuario}}</h6>
+                    </a-card>
+                </a-col>
+            </a-col>
             <a-col :span="6" :style="{padding:'10px'}">
-                <a-card title="Estado" :bordered="false" style="width: 100%;">
-                    <a-switch default-checked @change="onChange" />
-                </a-card>
                 <a-card title="Grado" :bordered="false" style="width: 100%;">
                     <a-switch default-checked @change="onChange" />
                 </a-card>
@@ -55,21 +90,39 @@
     </div>
 </template>
 <script>
-import gql from "graphql-tag";
+import {PerfilHeader} from "./../../gql/variables";
+import FotoCircular from "./../../components/FotoCircular.vue";
+import RangosUser from "./../../components/RangosUser.vue";
 export default {
     name: "VistaUsuario",
     data() {
         return {
+            Usuario:{}
         }
     },
-    components:{},
+    components:{FotoCircular,RangosUser},
     methods:{
         onChange(checked) {
             console.log(`a-switch to ${checked}`);
         },
+        async GetUserAPI(){
+            await this.$apollo.query({
+                query: PerfilHeader,
+                variables:{
+                    ID:parseInt(this.$route.params.ID)
+                },
+                fetchPolicy: "network-only"
+            }).then(result => {
+                if (result.data.Usuario != null) {
+                    this.Usuario=result.data.Usuario;
+                }
+            });
+        },
     },
     created() {
+        if (this.$route.params.ID!=null) {
+            this.GetUserAPI();
+        }
     },
 };
-</script>
 </script>

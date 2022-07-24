@@ -2,10 +2,11 @@ import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login.vue";
 import Inicio from "./views/Inicio.vue";
-import V404 from "./views/V404";
+import V404 from "./views/V404.vue";
 import Localidad from "./views/Localidad.vue";
 import ListaUsuario from "./views/Usuarios/ListaUsuario.vue";
 import VistaUsuario from "./views/Usuarios/VistaUsuario.vue";
+import ListaRoles from "./views/Roles/ListaRoles.vue";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -45,6 +46,11 @@ export default new Router({
             name: "VISTAUSUARIO",
             component: VistaUsuario,
             props: true
+        },
+        {
+            path: "/ListaRoles",
+            name: "LISTA ROLES",
+            component: ListaRoles
         }
     ],
     linkActiveClass: "active"
