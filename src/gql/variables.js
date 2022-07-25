@@ -28,33 +28,33 @@ export const PerfilHeader = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
 	  ID
-    Usuario
-	  PoliciaR {
-	    ID
-	    Nombre
-	    Paterno
-	    Materno
-	    Correo
-	    Telefono
-	    CI
-	    Nacimiento
-	  }
-	  FotoR {
-	    ID
-	    URL
-	  }
-	  Escalafon
-	  JerarquiaR {
-	    ID
-	    Grado
-	  }
-    RangoUsuario {
-      ID
-      Rango {
-        ID
-        Rango
-      }
-    }
+		Usuario
+		PoliciaR {
+			ID
+			Nombre
+			Paterno
+			Materno
+			Correo
+			Telefono
+			CI
+			Nacimiento
+		}
+		FotoR {
+			ID
+			URL
+		}
+		Escalafon
+		JerarquiaR {
+			ID
+			Grado
+		}
+		RangoUsuario {
+			ID
+			Rango {
+				ID
+				Rango
+			}
+		}
 	}
 }`;
 export const GetUserList = gql`
@@ -152,4 +152,44 @@ mutation EditRangos(
   ) {
 		response
   }
+}`;
+export const GetUsersRols = gql`
+query Rango($ID:Int!){
+	Rango(ID:$ID) {
+		ID
+		Rango
+		RangoUsuario {
+		  	ID
+		  	Usuario {
+				ID
+				Usuario
+				PoliciaR {
+					ID
+					Nombre
+					Paterno
+					Materno
+					Correo
+					Telefono
+					CI
+					Nacimiento
+				}
+				FotoR {
+					ID
+					URL
+				}
+				Escalafon
+				JerarquiaR {
+					ID
+					Grado
+				}
+				RangoUsuario {
+					ID
+					Rango {
+						ID
+						Rango
+					}
+				}
+		  	}
+		}
+	}
 }`;

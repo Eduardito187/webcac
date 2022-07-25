@@ -2,7 +2,9 @@
     <div class="ListaRol">
         <a-row :style="{marginBottom:'10px'}">
             <a-col :span="24">
-                <NewRol @actualizar_roles="UpdateRol" />
+                <NewRol @actualizar_roles="UpdateRol" :style="{display:'inline-block'}" />
+                <NewPermiso @actualizar_permisos="UpdatePermisos" :style="{display:'inline-block'}" />
+                <ListPermiso :FechaUpdate="FechaPermisosUpdate" :style="{display:'inline-block'}" />
             </a-col>
         </a-row>
         <a-row>
@@ -31,6 +33,8 @@
 <script>
 import {GetRoles} from "./../../../gql/variables";
 import NewRol from "./NewRol.vue";
+import NewPermiso from "./NewPermiso.vue";
+import ListPermiso from "./ListPermiso.vue";
 export default {
     name: "ListaRol",
     data() {
@@ -75,19 +79,25 @@ export default {
                         );
                     }
                 }
-            ]
+            ],
+            FechaPermisosUpdate:Math.random()
         }
     },
-    components:{NewRol},
+    components:{NewRol,NewPermiso,ListPermiso},
     methods:{
         handleSearch(selectedKeys, confirm, dataIndex) {
-        confirm();
-        this.searchText = selectedKeys[0];
-        this.searchedColumn = dataIndex;
+            confirm();
+            this.searchText = selectedKeys[0];
+            this.searchedColumn = dataIndex;
         },
         handleReset(clearFilters) {
-        clearFilters();
-        this.searchText = "";
+            clearFilters();
+            this.searchText = "";
+        },
+        UpdatePermisos(a){
+            if (a) {
+                this.FechaPermisosUpdate = Math.random();
+            }
         },
         UpdateRol(a){
             if (a) {
@@ -110,6 +120,7 @@ export default {
     },
     created() {
         this.GetRolesAPI();
+        this.FechaPermisosUpdate = Math.random();
     },
 };
 </script>
