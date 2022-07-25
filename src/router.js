@@ -7,6 +7,7 @@ import Localidad from "./views/Localidad.vue";
 import ListaUsuario from "./views/Usuarios/ListaUsuario.vue";
 import VistaUsuario from "./views/Usuarios/VistaUsuario.vue";
 import ListaRoles from "./views/Roles/ListaRoles.vue";
+import VistaRol from "./views/Roles/VistaRol";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -51,6 +52,12 @@ export default new Router({
             path: "/ListaRoles",
             name: "LISTA ROLES",
             component: ListaRoles
+        },
+        {
+            path: "/VistaRol/:ID",
+            name: "VISTA ROL",
+            component: VistaRol,
+            props: true
         }
     ],
     linkActiveClass: "active"

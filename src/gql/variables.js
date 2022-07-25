@@ -12,6 +12,18 @@ mutation validacion_login(
     id_cuenta
   }
 }`;
+export const SetRangosCreate = gql`
+mutation SetRangos(
+  $Nombre: String!
+  $Permisos: [Int]!
+) {
+	SetRangos(
+		Nombre: $Nombre
+		Permisos: $Permisos
+  ) {
+		response
+  }
+}`;
 export const PerfilHeader = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
@@ -82,13 +94,13 @@ export const CuentaPermiso = gql`
 query Usuario($ID:Int!){
 	Usuario(ID:$ID) {
 	  ID
-    RangoUsuario {
-      ID
-      Rango {
-        ID
-        Rango
-      }
-    }
+		RangoUsuario {
+		ID
+			Rango {
+				ID
+				Rango
+			}
+		}
 	}
 }`;
 export const GetRoles = gql`
@@ -99,3 +111,45 @@ query Rangos{
 	}
 }
 `;
+export const GetPermisos = gql`
+query Permisos{
+	Permisos {
+		ID
+		Permiso
+	}
+}
+`;
+export const GetRangoVista = gql`
+query Rango($ID:Int!){
+	Rango(ID:$ID) {
+		ID
+		Rango
+		RangoPermiso {
+			ID
+			RangoPermiso {
+				ID
+				Permiso
+			}
+		}
+	}
+}`;
+export const SetPermisoCreate = gql`
+mutation SetPermiso($Permiso: String!) {
+	SetPermiso(Permiso: $Permiso) {
+		response
+  }
+}`;
+export const SetRangosEdit = gql`
+mutation EditRangos(
+	$ID: Int!
+  	$Nombre: String!
+  	$Permisos: [Int]!
+) {
+	EditRangos(
+		ID: $ID
+		Nombre: $Nombre
+		Permisos: $Permisos
+  ) {
+		response
+  }
+}`;

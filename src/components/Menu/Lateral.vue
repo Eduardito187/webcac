@@ -14,9 +14,11 @@
                     <a-icon type="user" />
                     <span>Usuarios</span>
                 </a-menu-item>
-                <a-menu-item v-if="DATA!=null" v-for="i in DATA.RangoUsuario" :key="i.ID">
-                    <span>{{i.Rango.Rango}}</span>
-                </a-menu-item>
+                <template v-if="DATA!=null">
+                    <a-menu-item v-if="DATA.RangoUsuario!=null" v-for="i in DATA.RangoUsuario" :key="i.ID+'_Permiso'">
+                        <span>{{i.Rango.Rango}}</span>
+                    </a-menu-item>
+                </template>
             </a-menu>
         </a-spin>
     </div>

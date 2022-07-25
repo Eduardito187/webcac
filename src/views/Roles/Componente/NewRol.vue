@@ -1,162 +1,93 @@
 <template>
   <div>
     <a-button type="primary" @click="showDrawer" style="margin-left:10px;" icon="branches" size="large">
-        Nuevo Rol
+      Nuevo Rol
     </a-button>
     <a-drawer title="Crear nuevo rol" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose">
-      <a-form :form="form" layout="vertical" hide-required-mark>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Name">
-              <a-input
-                v-decorator="[
-                  'name',
-                  {
-                    rules: [{ required: true, message: 'Please enter user name' }],
-                  },
-                ]"
-                placeholder="Please enter user name"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="Url">
-              <a-input
-                v-decorator="[
-                  'url',
-                  {
-                    rules: [{ required: true, message: 'please enter url' }],
-                  },
-                ]"
-                style="width: 100%"
-                addon-before="http://"
-                addon-after=".com"
-                placeholder="please enter url"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Owner">
-              <a-select
-                v-decorator="[
-                  'owner',
-                  {
-                    rules: [{ required: true, message: 'Please select an owner' }],
-                  },
-                ]"
-                placeholder="Please a-s an owner"
-              >
-                <a-select-option value="xiao">
-                  Xiaoxiao Fu
-                </a-select-option>
-                <a-select-option value="mao">
-                  Maomao Zhou
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="Type">
-              <a-select
-                v-decorator="[
-                  'type',
-                  {
-                    rules: [{ required: true, message: 'Please choose the type' }],
-                  },
-                ]"
-                placeholder="Please choose the type"
-              >
-                <a-select-option value="private">
-                  Private
-                </a-select-option>
-                <a-select-option value="public">
-                  Public
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Approver">
-              <a-select
-                v-decorator="[
-                  'approver',
-                  {
-                    rules: [{ required: true, message: 'Please choose the approver' }],
-                  },
-                ]"
-                placeholder="Please choose the approver"
-              >
-                <a-select-option value="jack">
-                  Jack Ma
-                </a-select-option>
-                <a-select-option value="tom">
-                  Tom Liu
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="DateTime">
-              <a-date-picker
-                v-decorator="[
-                  'dateTime',
-                  {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  },
-                ]"
-                style="width: 100%"
-                :get-popup-container="trigger => trigger.parentNode"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="24">
-            <a-form-item label="Description">
-              <a-textarea
-                v-decorator="[
-                  'description',
-                  {
-                    rules: [{ required: true, message: 'Please enter url description' }],
-                  },
-                ]"
-                :rows="4"
-                placeholder="please enter url description"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-form>
+      <a-row>
+        <b-form-group label-cols-lg="12" label="Nuevo Rol" label-size="lg" label-class="font-weight-bold pt-0" class="mb-0 col-md-12" >
+          <div class="d-flex justify-content-between">
+            <b-form-group class="col-md-12" label="Nombre" label-for="Nombre" label-cols-sm="12" label-align-sm="right" >
+              <b-form-input id="Nombre" v-model="Nombre"></b-form-input>
+            </b-form-group>
+          </div>
+          <div class="d-flex justify-content-between">
+            <b-form-group class="col-md-12" label="Permisos:" label-for="Permisos" label-cols-sm="12" label-align-sm="right" >
+              <SelectPermisos @ActualizacionPermisos="UpdatePermiso" />
+            </b-form-group>
+          </div>
+        </b-form-group>
+      </a-row>
       <div :style="{position: 'absolute',right: 0,bottom: 0,width: '100%',borderTop: '1px solid #e9e9e9',padding: '10px 16px',background: '#fff',textAlign: 'right',zIndex: 1}" >
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
-          Cancel
+          Cancelar
         </a-button>
-        <a-button type="primary" @click="onClose">
-          Registrar Usuario
+        <a-button v-if="Nombre.length>0 && Permisos.length>0" type="primary" @click="RegistrarPermisoDB()">
+          Registrar Rol
         </a-button>
       </div>
     </a-drawer>
   </div>
 </template>
 <script>
+import SelectPermisos from './SelectPermisos.vue';
+import {SetRangosCreate} from "./../../../gql/variables";
 export default {
   data() {
     return {
       form: this.$form.createForm(this),
       visible: false,
+      Nombre:"",
+      Permisos:[]
     };
   },
+  components:{SelectPermisos},
   methods: {
+    UpdatePermiso(item){
+      this.Permisos=item;
+    },
+    LimpiarVariables(){
+      this.Nombre="";
+      this.Permisos=[];
+    },
+    async RegistrarPermisoDB() {
+      if (this.Nombre.length==0) {
+        this.$notification["error"]({
+          message: 'Permisos',
+          description: "El nombre es obligatorio."
+        });
+      }else if (this.Permisos.length==0) {
+        this.$notification["error"]({
+          message: 'Permisos',
+          description: "Seleccione permisos para el rol."
+        });
+      }else{
+        await this.$apollo.mutate({mutation: SetRangosCreate,variables: {Nombre: this.Nombre,Permisos: this.Permisos}}).then(result => {
+          if (result.data.SetRangos!=null) {
+            if (result.data.SetRangos.response) {
+              this.$notification["success"]({
+                message: 'Permisos',
+                description: "Rol registrado exitosamente."
+              });
+              this.onClose();
+              this.LimpiarVariables();
+              this.$emit('actualizar_roles',true);
+            }else{
+              this.$notification["error"]({
+                message: 'Permisos',
+                description: "Error al registrar."
+              });
+            }
+          }
+        });
+      }
+    },
     showDrawer() {
       this.visible = true;
     },
     onClose() {
       this.visible = false;
-    },
+    }
   },
 };
 </script>

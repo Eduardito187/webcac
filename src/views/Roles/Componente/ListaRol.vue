@@ -1,30 +1,29 @@
 <template>
     <div class="ListaRol">
-        <a-row>
-            <a-col :span="18">
-                <NewRol />
-            </a-col>
-            <a-col :span="6">
-                <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />
+        <a-row :style="{marginBottom:'10px'}">
+            <a-col :span="24">
+                <NewRol @actualizar_roles="UpdateRol" />
             </a-col>
         </a-row>
         <a-row>
             <a-col :span="24">
-                <div style="margin-bottom: 16px;margin-top: 16px;">
-                    <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">
-                        Reload
-                    </a-button>
-                    <span style="margin-left: 8px">
-                        <template v-if="hasSelected">
-                        {{ `Selected ${selectedRowKeys.length} items` }}
-                        </template>
-                    </span>
-                </div>
-                    <a-table
-                    :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                    :columns="columns"
-                    :data-source="roles"
-                    />
+                <a-table :columns="columns" :data-source="roles" >
+                    <div slot="filterDropdown" slot-scope="{setSelectedKeys,selectedKeys,confirm,clearFilters,column}" style="padding: 8px" >
+                        <a-input v-ant-ref="c => (searchInput = c)" :placeholder="`Filtrar por ${column.dataIndex}`" :value="selectedKeys[0]" style="width: 188px; margin-bottom: 8px; display: block;" @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])" @pressEnter="() => handleSearch(selectedKeys, confirm, column.dataIndex)" />
+                        <a-button type="primary" icon="search" size="small" style="width: 90px; margin-right: 8px" @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)" >Buscar</a-button>
+                        <a-button size="small" style="width: 90px" @click="() => handleReset(clearFilters)" >Limpiar</a-button>
+                    </div>
+                    <a-icon slot="filterIcon" slot-scope="filtered" type="search" :style="{ color: filtered ? '#108ee9' : undefined }" />
+                    <template slot="customRender" slot-scope="text, record, index, column">
+                        <span v-if="searchText && searchedColumn === column.dataIndex">
+                            <template v-for="(fragment, i) in text.toString().split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))" >
+                                <mark v-if="fragment.toLowerCase() === searchText.toLowerCase()" :key="i" class="highlight">{{ fragment }}</mark>
+                                <template v-else>{{ fragment }}</template>
+                            </template>
+                        </span>
+                        <template v-else>{{ text }}</template>
+                    </template>
+                </a-table>
             </a-col>
         </a-row>
     </div>
@@ -36,20 +35,38 @@ export default {
     name: "ListaRol",
     data() {
         return {
+            searchText: "",
+            searchInput: null,
+            searchedColumn: "",
             roles:[],
             columns:[
                 {
                     title: 'ID',
                     dataIndex: 'ID',
+                    key: 'ID+"_ID"'
                 },
                 {
                     title: 'Rango',
                     dataIndex: 'Rango',
+                    key: 'ID+"_Rango"',
+                    scopedSlots: {
+                        filterDropdown: "filterDropdown",
+                        filterIcon: "filterIcon",
+                        customRender: "customRender"
+                    },
+                    onFilter: (value, record) => record.Rango.toString().toLowerCase().includes(value.toLowerCase()),
+                    onFilterDropdownVisibleChange: visible => {
+                        if (visible) {
+                            setTimeout(() => {
+                                this.searchInput.focus();
+                            });
+                        }
+                    }
                 },
                 {
                     title: 'Accion',
                     dataIndex: 'ID',
-                    key: 'ID+"p"',
+                    key: 'ID+"_Accion"',
                     customRender: (text, row, index) => {
                         return (
                             <a-button type="primary" icon="edit" onClick={()=>this.AccionEdit(text)}>
@@ -58,32 +75,24 @@ export default {
                         );
                     }
                 }
-            ],
-            selectedRowKeys: [],
-            loading: false,
+            ]
         }
     },
     components:{NewRol},
-    computed: {
-        hasSelected() {
-            return this.selectedRowKeys.length > 0;
-        },
-    },
     methods:{
-        onSearch(value) {
-            console.log(value);
+        handleSearch(selectedKeys, confirm, dataIndex) {
+        confirm();
+        this.searchText = selectedKeys[0];
+        this.searchedColumn = dataIndex;
         },
-        start() {
-            this.loading = true;
-            // ajax request after empty completing
-            setTimeout(() => {
-                this.loading = false;
-                this.selectedRowKeys = [];
-            }, 1000);
+        handleReset(clearFilters) {
+        clearFilters();
+        this.searchText = "";
         },
-        onSelectChange(selectedRowKeys) {
-            console.log('selectedRowKeys changed: ', selectedRowKeys);
-            this.selectedRowKeys = selectedRowKeys;
+        UpdateRol(a){
+            if (a) {
+                this.GetRolesAPI();
+            }
         },
         async GetRolesAPI(){
             await this.$apollo.query({
@@ -96,7 +105,7 @@ export default {
             });
         },
         AccionEdit(ID){
-            alert(ID);
+            this.$router.push("/VistaRol/"+ID);
         }
     },
     created() {
