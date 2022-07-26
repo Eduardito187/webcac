@@ -105,6 +105,9 @@ export default {
         async GetPermisosAPI(){
             await this.$apollo.query({
                 query: GetPermisos,
+                variables:{
+                    ID_CUENTA:parseInt(localStorage.id_cuenta)
+                },
                 fetchPolicy: "network-only"
             }).then(result => {
                 if (result.data.Permisos != null) {

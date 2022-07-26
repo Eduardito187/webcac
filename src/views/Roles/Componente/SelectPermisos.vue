@@ -41,7 +41,9 @@ export default {
             this.$emit("ActualizacionPermisos",this.value);
         },
         async ObtenerPermisos() {
-            await this.$apollo.query({query: GetPermisos,fetchPolicy: "network-only"}).then(result => {
+            await this.$apollo.query({query: GetPermisos,variables:{
+                ID_CUENTA:parseInt(localStorage.id_cuenta)
+            },fetchPolicy: "network-only"}).then(result => {
                 this.Permisos = result.data.Permisos;
                 this.armadoSelectPermisos();
             });

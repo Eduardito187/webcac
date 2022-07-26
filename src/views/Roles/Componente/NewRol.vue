@@ -62,7 +62,11 @@ export default {
           description: "Seleccione permisos para el rol."
         });
       }else{
-        await this.$apollo.mutate({mutation: SetRangosCreate,variables: {Nombre: this.Nombre,Permisos: this.Permisos}}).then(result => {
+        await this.$apollo.mutate({mutation: SetRangosCreate,variables: {
+          ID_CUENTA:parseInt(localStorage.id_cuenta),
+          Nombre: this.Nombre,
+          Permisos: this.Permisos
+          }}).then(result => {
           if (result.data.SetRangos!=null) {
             if (result.data.SetRangos.response) {
               this.$notification["success"]({

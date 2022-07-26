@@ -107,6 +107,9 @@ export default {
         async GetRolesAPI(){
             await this.$apollo.query({
                 query: GetRoles,
+                variables:{
+                    ID_CUENTA:parseInt(localStorage.id_cuenta)
+                },
                 fetchPolicy: "network-only"
             }).then(result => {
                 if (result.data.Rangos != null) {

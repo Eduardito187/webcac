@@ -35,7 +35,10 @@ export default {
     components:{},
     methods:{
         async obtenerData(){
-            await this.$apollo.query({query: PerfilHeader,variables: {ID:parseInt(this.id_cuenta)},fetchPolicy: "network-only"}).then(result => {
+            await this.$apollo.query({query: PerfilHeader,variables: {
+                ID_CUENTA:parseInt(localStorage.id_cuenta),
+                ID:parseInt(this.id_cuenta)
+                },fetchPolicy: "network-only"}).then(result => {
                 this.DATA = result.data.Usuario;
                 this.Cargando = false;
             });

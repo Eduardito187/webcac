@@ -64,6 +64,7 @@ export default {
             await this.$apollo.query({
                 query: GetRangoVista,
                 variables:{
+                    ID_CUENTA:parseInt(localStorage.id_cuenta),
                     ID:parseInt(this.$route.params.ID)
                 },
                 fetchPolicy: "network-only"
@@ -88,7 +89,11 @@ export default {
                     description: "Seleccione permisos para el rol."
                 });
             }else{
-                await this.$apollo.mutate({mutation: SetRangosEdit,variables: {ID:parseInt(this.$route.params.ID),Nombre: this.Nombre,Permisos: this.Permisos}}).then(result => {
+                await this.$apollo.mutate({mutation: SetRangosEdit,variables: {
+                    ID_CUENTA:parseInt(localStorage.id_cuenta),
+                    ID:parseInt(this.$route.params.ID),
+                    Nombre: this.Nombre,
+                    Permisos: this.Permisos}}).then(result => {
                     if (result.data.EditRangos!=null) {
                         if (result.data.EditRangos.response) {
                             this.$notification["success"]({

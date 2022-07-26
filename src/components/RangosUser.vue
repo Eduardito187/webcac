@@ -14,7 +14,7 @@ export default {
     name: "RangosUser",
     props: {
         Rangos: {
-            type: Object
+            type: Array
         }
     },
 };

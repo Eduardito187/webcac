@@ -74,6 +74,26 @@ export default {
                     key: 'PoliciaR.ID+"_JerarquiaR"'
                 },
                 {
+                    title: 'Estado',
+                    dataIndex: 'Estado',
+                    key: 'ID+"_Estado"',
+                    customRender: (text, row, index) => {
+                        if (text) {
+                            return (
+                                <a-tag color={"green"}>
+                                    Activado
+                                </a-tag>
+                            );
+                        }else{
+                            return (
+                                <a-tag color={"red"}>
+                                    Bloqueado
+                                </a-tag>
+                            );
+                        }
+                    }
+                },
+                {
                     title: 'Escalafon',
                     dataIndex: 'Escalafon',
                     key: 'Escalafon+"_Escalafon"',
@@ -145,6 +165,9 @@ export default {
         async GetUserAPI(){
             await this.$apollo.query({
                 query: GetUserList,
+                variables:{
+                    ID_CUENTA:parseInt(localStorage.id_cuenta)
+                    },
                 fetchPolicy: "network-only"
             }).then(result => {
                 if (result.data.Usuarios != null) {

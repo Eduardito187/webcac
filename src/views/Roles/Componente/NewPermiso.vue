@@ -44,7 +44,10 @@ export default {
                 description: "El nombre es obligatorio."
                 });
             }else{
-                await this.$apollo.mutate({mutation: SetPermisoCreate,variables: {Permiso: this.Nombre}}).then(result => {
+                await this.$apollo.mutate({mutation: SetPermisoCreate,variables: {
+                  ID_CUENTA:parseInt(localStorage.id_cuenta),
+                  Permiso: this.Nombre
+                  }}).then(result => {
                 if (result.data.SetPermiso!=null) {
                     if (result.data.SetPermiso.response) {
                         this.$notification["success"]({

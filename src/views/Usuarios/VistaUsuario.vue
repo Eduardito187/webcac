@@ -2,13 +2,13 @@
     <div class="VistaUsuario">
         <a-spin :spinning="cargando">
             <div class="spin-content">
-                <a-row>
+                <a-row v-if="cargando==false">
                     <a-col :span="24" style="position:relative;margin-bottom: 85px;">
                         <a-col :span="24">
                             <div style="background-color: #808080;width:100%;height:200px;border-radius: 10px;" />
                         </a-col>
                         <div v-if="Usuario!=null" style="position:absolute;left:10px;top:125px;z-index:100;">
-                            <FotoCircular v-if="Usuario.FotoR!=null" :foto="Usuario.FotoR.URL" ancho="150" />
+                            <FotoCircular v-if="Usuario.FotoR!=null" :foto="Usuario.FotoR.URL" :ancho="150" />
                         </div>
                         <div v-if="Usuario!=null" style="position:absolute;left:170px;top:200px;z-index:100;">
                             <h1 class="TextoBold" v-if="Usuario.PoliciaR!=null">{{Usuario.PoliciaR.Nombre+" "+Usuario.PoliciaR.Paterno+" "+Usuario.PoliciaR.Materno}}</h1>
@@ -38,6 +38,7 @@
                                     Rangos : <RangosUser :Rangos="Usuario.RangoUsuario" />
                                 </h6>
                                 <h6 class="TextoBold">Usuario : {{Usuario.Usuario}}</h6>
+                                <h6 class="TextoBold">Estado : <a-tag v-if="Usuario.Estado" color="green">Activado</a-tag><a-tag v-else color="red">Bloqueado</a-tag></h6>
                             </a-card>
                         </a-col>
                     </a-col>
@@ -120,6 +121,7 @@ export default {
             await this.$apollo.query({
                 query: PerfilHeader,
                 variables:{
+                    ID_CUENTA:parseInt(localStorage.id_cuenta),
                     ID:parseInt(this.$route.params.ID)
                 },
                 fetchPolicy: "network-only"
