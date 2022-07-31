@@ -9,7 +9,7 @@
                     </div>
                 </template>
                 <a-menu slot="overlay">
-                    <a-menu-item>
+                    <a-menu-item @click="IrLocalidad('MiPerfil')">
                         Perfil
                     </a-menu-item>
                     <a-menu-item @click="CerrarSesion()">
@@ -43,8 +43,8 @@ export default {
                 this.Cargando = false;
             });
         },
-        IrLocalidad(){
-            this.$router.push("/Localidad");
+        IrLocalidad(a){
+            this.$router.push("/"+a);
         },
         CerrarSesion(){
             localStorage.removeItem('id_cuenta');

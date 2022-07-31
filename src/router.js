@@ -7,7 +7,10 @@ import Localidad from "./views/Localidad.vue";
 import ListaUsuario from "./views/Usuarios/ListaUsuario.vue";
 import VistaUsuario from "./views/Usuarios/VistaUsuario.vue";
 import ListaRoles from "./views/Roles/ListaRoles.vue";
-import VistaRol from "./views/Roles/VistaRol";
+import VistaRol from "./views/Roles/VistaRol.vue";
+import MiPerfil from "./views/Usuarios/MiPerfil.vue";
+import PanelControl from "./views/Usuarios/PanelControl.vue";
+import Bitacora from "./views/Bitacora/Bitacora.vue";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -58,6 +61,21 @@ export default new Router({
             name: "VISTA ROL",
             component: VistaRol,
             props: true
+        },
+        {
+            path: "/MiPerfil",
+            name: "Mi Perfil",
+            component: MiPerfil
+        },
+        {
+            path: "/PanelControl",
+            name: "Panel de Control",
+            component: PanelControl
+        },
+        {
+            path: "/Bitacora",
+            name: "Bitacora de Control",
+            component: Bitacora
         }
     ],
     linkActiveClass: "active"

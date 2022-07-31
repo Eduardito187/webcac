@@ -240,3 +240,91 @@ query Rango(
 		}
 	}
 }`;
+export const SetEstadoUsuario = gql`
+mutation DisableUsuario(
+	$ID_CUENTA: Int!
+	$ID: Int!
+  	$Estado: Boolean!
+) {
+	DisableUsuario(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+		Estado: $Estado
+  ) {
+		response
+  }
+}`;
+export const GetJerarquias = gql`
+query Jerarquias(
+	$ID_CUENTA: Int!
+	){
+	Jerarquias(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Grado
+	}
+}
+`;
+export const ChangeJerarquia = gql`
+mutation ActualizarJerarquia(
+	$ID_CUENTA: Int!
+	$ID: Int!
+  	$Jerarquia: Int!
+) {
+	ActualizarJerarquia(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+		Jerarquia: $Jerarquia
+  ) {
+		response
+  }
+}`;
+export const UpdateUsuario = gql`
+mutation UpdateUsuario(
+	$ID_CUENTA: Int!
+	$ID: Int!
+  	$Nombre: String!
+	$Paterno: String!
+	$Materno: String!
+	$Correo: String!
+	$Telefono: String!
+) {
+	UpdateUsuario(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+		Nombre: $Nombre
+		Paterno: $Paterno
+		Materno: $Materno
+		Correo: $Correo
+		Telefono: $Telefono
+  ) {
+		response
+  }
+}`;
+export const DeleteUsuario = gql`
+mutation DeleteUsuario(
+	$ID_CUENTA: Int!
+	$ID: Int!
+) {
+	DeleteUsuario(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+  ) {
+		response
+  }
+}`;
+export const SetRolesEdit = gql`
+mutation EditRolesUsers(
+	$ID_CUENTA: Int!
+	$ID: Int!
+  	$Roles: [Int]!
+) {
+	EditRolesUsers(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+		Roles: $Roles
+  ) {
+		response
+  }
+}`;

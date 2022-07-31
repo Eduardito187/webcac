@@ -1,16 +1,16 @@
 <template>
     <a-spin :spinning="cargando">
         <div class="spin-content">
-            <a-tree-select v-model="value" style="width: 100%;" @change="imprimir_Permisos()" :dropdownStyle="{maxHeight: '300px'}" :tree-data="OpcionesSelect" tree-checkable search-placeholder="Seleccionar Permisos" />
+            <a-tree-select v-model="value" style="width: 100%;" @change="imprimir_Rangos()" :dropdownStyle="{maxHeight: '300px'}" :tree-data="OpcionesSelect" tree-checkable search-placeholder="Seleccionar Rangos" />
         </div>
     </a-spin>
 </template>
 <script>
-import {GetPermisos} from "./../../../gql/variables";
+import {GetRoles} from "./../../../gql/variables";
 export default {
     data() {
         return {
-            Permisos: [],
+            Rangos: [],
             value: [],
             permiso: null,
             RangoID: 0,
@@ -19,12 +19,12 @@ export default {
         };
     },
     props: {
-        PermisosRol: {
+        RolesUser: {
             type: Array
         }
     },
     watch: {
-        PermisosRol: {
+        RolesUser: {
             immediate: true,
             handler(val, oldVal) {
                 //nuevo--anterior
@@ -37,39 +37,39 @@ export default {
         }
     },
     methods: {
-        async imprimir_Permisos(){
-            this.$emit("ActualizacionPermisos",this.value);
+        async imprimir_Rangos(){
+            this.$emit("ActualizacionRoles",this.value);
         },
-        async ObtenerPermisos() {
-            await this.$apollo.query({query: GetPermisos,variables:{
+        async ObtenerRoles() {
+            await this.$apollo.query({query: GetRoles,variables:{
                 ID_CUENTA:parseInt(localStorage.id_cuenta)
             },fetchPolicy: "network-only"}).then(result => {
-                this.Permisos = result.data.Permisos;
-                this.armadoSelectPermisos();
+                this.Rangos = result.data.Rangos;
+                this.armadoSelectRangos();
             });
         },
-        armadoSelectPermisos(){
-            for (let index = 0; index < this.Permisos.length; index++) {
+        armadoSelectRangos(){
+            for (let index = 0; index < this.Rangos.length; index++) {
                 this.OpcionesSelect.push({
-                    title: this.Permisos[index]["Permiso"],
-                    value: this.Permisos[index]["ID"],
-                    key: this.Permisos[index]["ID"]
+                    title: this.Rangos[index]["Rango"],
+                    value: this.Rangos[index]["ID"],
+                    key: this.Rangos[index]["ID"]
                 });
             }
             this.SeleccionadorItemSelect();
         },
         UpdateSetAPI(obj){
             for (let index = 0; index < obj.length; index++) {
-                if (obj[index]["RangoPermiso"]!=null) {
-                    if (obj[index]["RangoPermiso"]["ID"]!=null) {
-                        this.value.push(obj[index]["RangoPermiso"]["ID"]);
+                if (obj[index]["Rango"]!=null) {
+                    if (obj[index]["Rango"]["ID"]!=null) {
+                        this.value.push(obj[index]["Rango"]["ID"]);
                     }
                 }
             }
         },
         SeleccionadorItemSelect(){
-            if (this.PermisosRol!=null) {
-                this.UpdateSetAPI(this.PermisosRol);
+            if (this.RolesUser!=null) {
+                this.UpdateSetAPI(this.RolesUser);
             }else{
                 this.value=[];
             }
@@ -77,7 +77,7 @@ export default {
         }
     },
     async created() {
-        this.ObtenerPermisos();
+        this.ObtenerRoles();
     }
 };
 </script>

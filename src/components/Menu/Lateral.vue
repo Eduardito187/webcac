@@ -2,7 +2,7 @@
     <div class="Lateral">
         <a-spin tip="Carcango..." :spinning="Cargando">
             <a-menu theme="light" mode="inline">
-                <a-menu-item key="1">
+                <a-menu-item key="1" @click="AccederURL('/PanelControl')">
                     <a-icon type="dashboard" />
                     <span>Panel de Control</span>
                 </a-menu-item>

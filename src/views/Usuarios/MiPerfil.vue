@@ -1,5 +1,5 @@
 <template>
-    <div class="VistaUsuario">
+    <div class="MiPerfil">
         <a-spin :spinning="cargando">
             <div class="spin-content">
                 <a-row v-if="cargando==false">
@@ -43,27 +43,7 @@
                         </a-col>
                     </a-col>
                     <a-col v-show="Editando==true" :span="24">
-                        <a-col :span="6" :style="{padding:'10px'}">
-                            <a-card v-if="Usuario.JerarquiaR!=null" title="Grado" :bordered="true" style="width: 100%;margin:5px;">
-                                <ActualizarRangoPoli @Jerarquia_Update="JerarquiaActualizada($event)" :Grado="Usuario.JerarquiaR.Grado" />
-                            </a-card>
-                            <a-card title="Roles" :bordered="true" style="width: 100%;margin:5px;">
-                                <a-row>
-                                    <SelectRoles @ActualizacionRoles="ActualizarRoles($event)" :RolesUser="RolesUser" />
-                                </a-row>
-                                <a-row>
-                                    <a-col :span="24" :style="{marginTop:'10px'}">
-                                        <a-button type="primary" @click="BTNUpdateRoles()" icon="edit" size="large">
-                                            Actualizar
-                                        </a-button>
-                                    </a-col>
-                                </a-row>
-                            </a-card>
-                            <a-card title="Estado" :bordered="true" style="width: 100%;margin:5px;">
-                                <a-switch v-model="Usuario.Estado" @change="onChangeState" />
-                            </a-card>
-                        </a-col>
-                        <a-col :span="18">
+                        <a-col :span="24">
                             <a-row>
                                 <a-col :span="8">
                                     <b-form-group class="col-md-11" label="Nombre" label-for="Nombre" label-cols-sm="12" label-align-sm="right" >
@@ -96,9 +76,6 @@
                                     <a-button type="primary" @click="EditarUsuarioApi()" style="background-color: #0b8235 !important;border-color: #0b8235 !important;" icon="edit" size="large">
                                         Editar
                                     </a-button>
-                                    <a-button type="primary" @click="EliminarUsuarioApi()" style="margin-left:10px;background-color: #ff4d4f !important;border-color: #ff4d4f !important;" icon="delete" size="large">
-                                        Eliminar
-                                    </a-button>
                                 </a-col>
                             </a-row>
                         </a-col>
@@ -115,7 +92,7 @@ import RangosUser from "./../../components/RangosUser.vue";
 import ActualizarRangoPoli from "./Componente/ActualizarRangoPoli.vue";
 import SelectRoles from "../Roles/Componente/SelectRoles.vue";
 export default {
-    name: "VistaUsuario",
+    name: "MiPerfil",
     data() {
         return {
             Usuario:{},
@@ -123,55 +100,16 @@ export default {
             Editando:false,
             cargando: true,
             RolesUser:[],
-            ActualarRoles:[]
         }
     },
     components:{FotoCircular,RangosUser,ActualizarRangoPoli,SelectRoles},
     methods:{
-        async BTNUpdateRoles(){
-            if (this.ActualarRoles.length>0) {
-                await this.$apollo.mutate({
-                    mutation: SetRolesEdit,
-                    variables:{
-                        ID_CUENTA:parseInt(localStorage.id_cuenta),
-                        ID:parseInt(this.$route.params.ID),
-                        Roles: this.ActualarRoles
-                    }
-                }).then(result => {
-                    if (result.data.EditRolesUsers != null) {
-                        if (result.data.EditRolesUsers.response) {
-                            this.$notification["success"]({
-                                message: this.RetornarNombreCompleto(),
-                                description: 'Roles actualizados.'
-                            });
-                            this.GetUserAPI();
-                        }else{
-                            this.$notification["success"]({
-                                message: this.RetornarNombreCompleto(),
-                                description: 'Cuenta no existe.'
-                            });
-                        }
-                    }
-                });
-            }
-        },
-        async ActualizarRoles(obj){
-            if (obj.length>0) {
-                this.ActualarRoles=obj;
-            }
-        },
-        JerarquiaActualizada(data){
-            if (data!=null) {
-                this.Usuario.JerarquiaR.ID=data.ID;
-                this.Usuario.JerarquiaR.Grado=data.Grado;
-            }
-        },
         async EditarUsuarioApi(){
             await this.$apollo.mutate({
                 mutation: UpdateUsuario,
                 variables:{
                     ID_CUENTA:parseInt(localStorage.id_cuenta),
-                    ID:parseInt(this.$route.params.ID),
+                    ID:parseInt(localStorage.id_cuenta),
                     Nombre: this.FormUsuario.Nombre,
                     Paterno: this.FormUsuario.Paterno,
                     Materno: this.FormUsuario.Materno,
@@ -199,70 +137,18 @@ export default {
                 }
             });
         },
-        async EliminarUsuarioApi(){
-            await this.$apollo.mutate({
-                mutation: DeleteUsuario,
-                variables:{
-                    ID_CUENTA:parseInt(localStorage.id_cuenta),
-                    ID:parseInt(this.$route.params.ID)
-                }
-            }).then(result => {
-                if (result.data.DeleteUsuario != null) {
-                    if (result.data.DeleteUsuario.response) {
-                        this.$notification["success"]({
-                            message: this.RetornarNombreCompleto(),
-                            description: 'Cuenta eliminada.'
-                        });
-                    }else{
-                        this.$notification["success"]({
-                            message: this.RetornarNombreCompleto(),
-                            description: 'Cuenta no existe.'
-                        });
-                    }
-                }
-            });
-        },
         EditarStatusSet(check){
             this.Editando=check;
         },
-        onChange(checked) {
-            console.log(`a-switch to ${checked}`);
-        },
         RetornarNombreCompleto(){
             return this.Usuario.PoliciaR.Nombre+" "+this.Usuario.PoliciaR.Paterno+" "+this.Usuario.PoliciaR.Materno;
-        },
-        async onChangeState(checked){
-            this.Usuario.Estado=checked;
-
-            await this.$apollo.mutate({
-                mutation: SetEstadoUsuario,
-                variables:{
-                    ID_CUENTA:parseInt(localStorage.id_cuenta),
-                    ID:parseInt(this.$route.params.ID),
-                    Estado:this.Usuario.Estado
-                }
-            }).then(result => {
-                if (result.data.DisableUsuario != null) {
-                    if (result.data.DisableUsuario.response) {
-                        this.$notification["success"]({
-                            message: this.RetornarNombreCompleto(),
-                            description: this.Usuario.Estado? 'Cuenta habilitada.' : 'Cuenta desactivada.'
-                        });
-                    }else{
-                        this.$notification["success"]({
-                            message: this.RetornarNombreCompleto(),
-                            description: 'Cuenta no existe.'
-                        });
-                    }
-                }
-            });
         },
         async GetUserAPI(){
             await this.$apollo.query({
                 query: PerfilHeader,
                 variables:{
                     ID_CUENTA:parseInt(localStorage.id_cuenta),
-                    ID:parseInt(this.$route.params.ID)
+                    ID:parseInt(localStorage.id_cuenta)
                 },
                 fetchPolicy: "network-only"
             }).then(result => {
@@ -282,7 +168,7 @@ export default {
         },
     },
     created() {
-        if (this.$route.params.ID!=null) {
+        if (localStorage.id_cuenta!=null) {
             this.GetUserAPI();
         }
     },
