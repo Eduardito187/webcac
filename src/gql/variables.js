@@ -328,3 +328,42 @@ mutation EditRolesUsers(
 		response
   }
 }`;
+export const GetBitacoralist = gql`
+query HistorialActividades($ID_CUENTA: Int!){
+	HistorialActividades(ID_CUENTA:$ID_CUENTA) {
+		ID
+		Glosa
+		Actividad {
+			ID
+			Actividad
+		}
+		Usuario {
+			ID
+			Usuario
+			PoliciaR {
+				ID
+				Nombre
+				Paterno
+				Materno
+				Correo
+				Telefono
+				CI
+				Nacimiento
+			}
+			FotoR {
+				ID
+				URL
+				Direcicon
+				Formato
+				Peso
+			}
+			Escalafon
+			JerarquiaR {
+				ID
+				Grado
+			}
+			Estado
+		}
+	}
+}
+`;
