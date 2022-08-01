@@ -2,7 +2,7 @@
     <div class="HeaderLista">
         <a-row>
             <a-col :span="18">
-                <NewUser />
+                <NewUser @Nuevo_UsuarioAPI="UpdateAPINEW($event)" />
             </a-col>
             <a-col :span="6">
                 <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />
@@ -177,6 +177,11 @@ export default {
         },
         AccionEdit(ID){
             this.$router.push("/VistaUsuario/"+ID);
+        },
+        UpdateAPINEW(a){
+            if (a) {
+                this.GetUserAPI();
+            }
         }
     },
     created() {

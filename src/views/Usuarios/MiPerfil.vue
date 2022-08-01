@@ -129,7 +129,7 @@ export default {
                         this.Usuario.PoliciaR.Telefono=this.FormUsuario.Telefono;
                         this.Usuario.PoliciaR.Correo=this.FormUsuario.Correo
                     }else{
-                        this.$notification["success"]({
+                        this.$notification["error"]({
                             message: this.RetornarNombreCompleto(),
                             description: 'Cuenta no existe.'
                         });

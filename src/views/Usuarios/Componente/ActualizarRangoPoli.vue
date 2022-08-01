@@ -33,29 +33,33 @@ export default {
         },
         async handleChange(value) {
             this.ValorGrado = value;
-            await this.$apollo.mutate({
-                mutation: ChangeJerarquia,
-                variables:{
-                    ID_CUENTA:parseInt(localStorage.id_cuenta),
-                    ID:parseInt(this.$route.params.ID),
-                    Jerarquia:this.ObtenerIDJerarquia(this.ValorGrado)
-                }
-            }).then(result => {
-                if (result.data.ActualizarJerarquia != null) {
-                    if (result.data.ActualizarJerarquia.response) {
-                        this.$notification["success"]({
-                            message: 'CAC',
-                            description: 'Jerarquia actualizada'
-                        });
-                        this.$emit('Jerarquia_Update',{ID:this.ObtenerIDJerarquia(this.ValorGrado),Grado:this.ValorGrado});
-                    }else{
-                        this.$notification["success"]({
-                            message: this.RetornarNombreCompleto(),
-                            description: 'Cuenta no existe.'
-                        });
+            if (this.$route.params.ID!=null) {
+                await this.$apollo.mutate({
+                    mutation: ChangeJerarquia,
+                    variables:{
+                        ID_CUENTA:parseInt(localStorage.id_cuenta),
+                        ID:parseInt(this.$route.params.ID),
+                        Jerarquia:this.ObtenerIDJerarquia(this.ValorGrado)
                     }
-                }
-            });
+                }).then(result => {
+                    if (result.data.ActualizarJerarquia != null) {
+                        if (result.data.ActualizarJerarquia.response) {
+                            this.$notification["success"]({
+                                message: 'CAC',
+                                description: 'Jerarquia actualizada'
+                            });
+                            this.$emit('Jerarquia_Update',{ID:this.ObtenerIDJerarquia(this.ValorGrado),Grado:this.ValorGrado});
+                        }else{
+                            this.$notification["error"]({
+                                message: this.RetornarNombreCompleto(),
+                                description: 'Cuenta no existe.'
+                            });
+                        }
+                    }
+                });
+            }else{
+                this.$emit('Jerarquia_Update',{ID:this.ObtenerIDJerarquia(this.ValorGrado),Grado:this.ValorGrado});
+            }
         },
         async ObtenerAPI(){
             await this.$apollo.query({

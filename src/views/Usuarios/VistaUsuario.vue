@@ -146,7 +146,7 @@ export default {
                             });
                             this.GetUserAPI();
                         }else{
-                            this.$notification["success"]({
+                            this.$notification["error"]({
                                 message: this.RetornarNombreCompleto(),
                                 description: 'Cuenta no existe.'
                             });
@@ -191,7 +191,7 @@ export default {
                         this.Usuario.PoliciaR.Telefono=this.FormUsuario.Telefono;
                         this.Usuario.PoliciaR.Correo=this.FormUsuario.Correo
                     }else{
-                        this.$notification["success"]({
+                        this.$notification["error"]({
                             message: this.RetornarNombreCompleto(),
                             description: 'Cuenta no existe.'
                         });
@@ -214,7 +214,7 @@ export default {
                             description: 'Cuenta eliminada.'
                         });
                     }else{
-                        this.$notification["success"]({
+                        this.$notification["error"]({
                             message: this.RetornarNombreCompleto(),
                             description: 'Cuenta no existe.'
                         });
@@ -249,7 +249,7 @@ export default {
                             description: this.Usuario.Estado? 'Cuenta habilitada.' : 'Cuenta desactivada.'
                         });
                     }else{
-                        this.$notification["success"]({
+                        this.$notification["error"]({
                             message: this.RetornarNombreCompleto(),
                             description: 'Cuenta no existe.'
                         });

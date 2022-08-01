@@ -7,127 +7,64 @@
       <a-form :form="form" layout="vertical" hide-required-mark>
         <a-row :gutter="16">
           <a-col :span="12">
-            <a-form-item label="Name">
-              <a-input
-                v-decorator="[
-                  'name',
-                  {
-                    rules: [{ required: true, message: 'Please enter user name' }],
-                  },
-                ]"
-                placeholder="Please enter user name"
-              />
-            </a-form-item>
+              <b-form-group class="col-md-11" label="Nombre" label-for="Nombre" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Nombre" id="Nombre"></b-form-input>
+              </b-form-group>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="Url">
-              <a-input
-                v-decorator="[
-                  'url',
-                  {
-                    rules: [{ required: true, message: 'please enter url' }],
-                  },
-                ]"
-                style="width: 100%"
-                addon-before="http://"
-                addon-after=".com"
-                placeholder="please enter url"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Owner">
-              <a-select
-                v-decorator="[
-                  'owner',
-                  {
-                    rules: [{ required: true, message: 'Please select an owner' }],
-                  },
-                ]"
-                placeholder="Please a-s an owner"
-              >
-                <a-select-option value="xiao">
-                  Xiaoxiao Fu
-                </a-select-option>
-                <a-select-option value="mao">
-                  Maomao Zhou
-                </a-select-option>
-              </a-select>
-            </a-form-item>
+              <b-form-group class="col-md-11" label="Apellido Paterno" label-for="Apellido Paterno" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Paterno" id="Paterno"></b-form-input>
+              </b-form-group>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="Type">
-              <a-select
-                v-decorator="[
-                  'type',
-                  {
-                    rules: [{ required: true, message: 'Please choose the type' }],
-                  },
-                ]"
-                placeholder="Please choose the type"
-              >
-                <a-select-option value="private">
-                  Private
-                </a-select-option>
-                <a-select-option value="public">
-                  Public
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Approver">
-              <a-select
-                v-decorator="[
-                  'approver',
-                  {
-                    rules: [{ required: true, message: 'Please choose the approver' }],
-                  },
-                ]"
-                placeholder="Please choose the approver"
-              >
-                <a-select-option value="jack">
-                  Jack Ma
-                </a-select-option>
-                <a-select-option value="tom">
-                  Tom Liu
-                </a-select-option>
-              </a-select>
-            </a-form-item>
+              <b-form-group class="col-md-11" label="Apellido Materno" label-for="Apellido Materno" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Materno" id="Materno"></b-form-input>
+              </b-form-group>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="DateTime">
-              <a-date-picker
-                v-decorator="[
-                  'dateTime',
-                  {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  },
-                ]"
-                style="width: 100%"
-                :get-popup-container="trigger => trigger.parentNode"
-              />
-            </a-form-item>
+              <b-form-group class="col-md-11" label="Telefono" label-for="Telefono" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Telefono" id="Telefono"></b-form-input>
+              </b-form-group>
           </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="24">
-            <a-form-item label="Description">
-              <a-textarea
-                v-decorator="[
-                  'description',
-                  {
-                    rules: [{ required: true, message: 'Please enter url description' }],
-                  },
-                ]"
-                :rows="4"
-                placeholder="please enter url description"
-              />
-            </a-form-item>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Correo" label-for="Correo" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Correo" id="Correo"></b-form-input>
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Usuario" label-for="Usuario" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.Usuario" id="Usuario"></b-form-input>
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="CI" label-for="CI" label-cols-sm="12" label-align-sm="right" >
+                  <b-form-input v-model="FormUsuario.CI" id="CI"></b-form-input>
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Fecha de nacimiento" label-cols-sm="12" label-align-sm="right" >
+                <input type="date" class="form-control form-control-lg" v-model="FormUsuario.Nacimiento" />
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Password" label-for="Password" label-cols-sm="12" label-align-sm="right" >
+                <input type="password" class="form-control form-control-lg" v-model="FormUsuario.Password" />
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Escalafon" label-for="Escalafon" label-cols-sm="12" label-align-sm="right" >
+                <b-form-input v-model="FormUsuario.Escalafon" id="Escalafon"></b-form-input>
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Grado" label-for="Grado" label-cols-sm="12" label-align-sm="right" >
+                <ActualizarRangoPoli @Jerarquia_Update="JerarquiaActualizada($event)" :Grado="''" />
+              </b-form-group>
+          </a-col>
+          <a-col :span="12">
+              <b-form-group class="col-md-11" label="Roles" label-for="Roles" label-cols-sm="12" label-align-sm="right" >
+                <SelectRoles @ActualizacionRoles="ActualizarRoles($event)" :RolesUser="[]" />
+              </b-form-group>
           </a-col>
         </a-row>
       </a-form>
@@ -135,7 +72,8 @@
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
           Cancel
         </a-button>
-        <a-button type="primary" @click="onClose">
+        <a-button type="primary" v-if="FormUsuario.Nacimiento.length>0 && FormUsuario.Roles.length>0 && FormUsuario.Escalafon.length>0 && FormUsuario.Nombre.length>0 && FormUsuario.Paterno.length>0 
+        && FormUsuario.Materno.length>0 && FormUsuario.Telefono.length>0 && FormUsuario.Correo.length>0 && FormUsuario.Usuario.length>0 && FormUsuario.Password.length>0" @click="RegistrarUsuario()">
           Registrar Usuario
         </a-button>
       </div>
@@ -143,14 +81,79 @@
   </div>
 </template>
 <script>
+import ActualizarRangoPoli from "./ActualizarRangoPoli.vue";
+import SelectRoles from "../../Roles/Componente/SelectRoles.vue";
+import {CreateUsuarioAPI} from "./../../../gql/variables";
 export default {
   data() {
     return {
       form: this.$form.createForm(this),
       visible: false,
+      FormUsuario:{
+        "Escalafon":"",
+        "Nombre":"",
+        "Paterno":"",
+        "Materno":"",
+        "Telefono":"",
+        "CI":"",
+        "Correo":"",
+        "Usuario":"",
+        "Password":"",
+        "IDGrado":"",
+        "Grado":"",
+        "Nacimiento":"",
+        "Roles":[]
+      }
     };
   },
+  components:{ActualizarRangoPoli,SelectRoles},
   methods: {
+    async RegistrarUsuario(){
+      await this.$apollo.mutate({
+        mutation: CreateUsuarioAPI,
+        variables:{
+          ID_CUENTA:parseInt(localStorage.id_cuenta),
+          Escalafon:this.FormUsuario.Escalafon,
+          Nombre:this.FormUsuario.Nombre,
+          Paterno:this.FormUsuario.Paterno,
+          Materno:this.FormUsuario.Materno,
+          Telefono:this.FormUsuario.Telefono,
+          CI:this.FormUsuario.CI,
+          Correo:this.FormUsuario.Correo,
+          Usuario:this.FormUsuario.Usuario,
+          Pwd:this.FormUsuario.Password,
+          Jerarquia:parseInt(this.FormUsuario.IDGrado),
+          Nacimiento:this.FormUsuario.Nacimiento,
+          Roles:this.FormUsuario.Roles
+        }
+      }).then(result => {
+        if (result.data.CreateUsuario != null) {
+          if (result.data.CreateUsuario.response) {
+            this.$notification["success"]({
+              message: 'CAC',
+              description: 'Cuenta registrada exitosamente.'
+            });
+            this.$emit('Nuevo_UsuarioAPI',true);
+          }else{
+            this.$notification["error"]({
+              message: 'CAC',
+              description: 'Cuenta no existe.'
+            });
+          }
+        }
+      });
+    },
+    async ActualizarRoles(obj){
+      if (obj.length>0) {
+        this.FormUsuario.Roles=obj;
+      }
+    },
+    JerarquiaActualizada(data){
+      if (data!=null) {
+        this.FormUsuario.IDGrado=data.ID;
+        this.FormUsuario.Grado=data.Grado;
+      }
+    },
     showDrawer() {
       this.visible = true;
     },

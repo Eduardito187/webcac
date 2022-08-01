@@ -328,6 +328,40 @@ mutation EditRolesUsers(
 		response
   }
 }`;
+export const CreateUsuarioAPI = gql`
+mutation CreateUsuario(
+	$ID_CUENTA: Int!
+	$Escalafon: String!
+	$Nombre: String!
+	$Paterno: String!
+	$Materno: String!
+	$Telefono: String!
+	$CI: String!
+	$Correo: String!
+	$Usuario: String!
+	$Pwd: String!
+	$Jerarquia: Int!
+	$Nacimiento: String!
+  	$Roles: [Int]!
+) {
+	CreateUsuario(
+		ID_CUENTA: $ID_CUENTA
+		Escalafon: $Escalafon
+		Nombre: $Nombre
+		Paterno: $Paterno
+		Materno: $Materno
+		Telefono: $Telefono
+		CI: $CI
+		Correo: $Correo
+		Usuario: $Usuario
+		Pwd: $Pwd
+		Jerarquia: $Jerarquia
+		Nacimiento: $Nacimiento
+		Roles: $Roles
+  ) {
+		response
+  }
+}`;
 export const GetBitacoralist = gql`
 query HistorialActividades($ID_CUENTA: Int!){
 	HistorialActividades(ID_CUENTA:$ID_CUENTA) {
