@@ -14,6 +14,14 @@
                     <a-icon type="user" />
                     <span>Usuarios</span>
                 </a-menu-item>
+                <a-menu-item key="4" @click="AccederURL('/Mascotas')">
+                    <a-icon type="qq" />
+                    <span>Mascotas</span>
+                </a-menu-item>
+                <a-menu-item key="5" @click="AccederURL('/Personas')">
+                    <a-icon type="user" />
+                    <span>Personas</span>
+                </a-menu-item>
                 <template v-if="DATA!=null">
                     <a-menu-item v-if="DATA.RangoUsuario!=null" v-for="i in DATA.RangoUsuario" :key="i.ID+'_Permiso'">
                         <span>{{i.Rango.Rango}}</span>

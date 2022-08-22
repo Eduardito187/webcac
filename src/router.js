@@ -11,6 +11,11 @@ import VistaRol from "./views/Roles/VistaRol.vue";
 import MiPerfil from "./views/Usuarios/MiPerfil.vue";
 import PanelControl from "./views/Usuarios/PanelControl.vue";
 import Bitacora from "./views/Bitacora/Bitacora.vue";
+import Personas from "./views/Personas/Personas.vue";
+import NuevaReferencia from "./views/Personas/NuevaReferencia.vue";
+import NuevoPropietario from "./views/Personas/NuevoPropietario.vue";
+import Mascotas from "./views/Mascotas/Mascotas.vue";
+import NuevaMascota from "./views/Mascotas/NuevaMascota.vue";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -20,7 +25,8 @@ Vue.use(Router);
 export default new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes: [{
+    routes: [
+        {
             path: "*",
             name: "404",
             component: V404
@@ -76,6 +82,31 @@ export default new Router({
             path: "/Bitacora",
             name: "Bitacora de Control",
             component: Bitacora
+        },
+        {
+            path: "/Personas",
+            name: "Personas",
+            component: Personas
+        },
+        {
+            path: "/Mascotas",
+            name: "Mascotas",
+            component: Mascotas
+        },
+        {
+            path: "/NuevaMascota",
+            name: "Nueva Mascotas",
+            component: NuevaMascota
+        },
+        {
+            path: "/NuevaReferencia",
+            name: "Nueva Referencia",
+            component: NuevaReferencia
+        },
+        {
+            path: "/NuevoPropietario",
+            name: "Nuevo Propietario",
+            component: NuevoPropietario
         }
     ],
     linkActiveClass: "active"

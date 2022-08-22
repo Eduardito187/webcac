@@ -401,3 +401,88 @@ query HistorialActividades($ID_CUENTA: Int!){
 	}
 }
 `;
+export const GetVacunas = gql`
+query Vacunas(
+	$ID_CUENTA: Int!
+	){
+		Vacunas(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+		Obligatorio
+	}
+}
+`;
+export const GetRazas = gql`
+query Razas(
+	$ID_CUENTA: Int!
+	){
+		Razas(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+	}
+}
+`;
+export const GetDepartamentos = gql`
+query Departamentos(
+	$ID_CUENTA: Int!
+	){
+		Departamentos(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+	}
+}
+`;
+export const GetProvincias = gql`
+query Provincias(
+	$ID_CUENTA: Int!
+	){
+		Provincias(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+	}
+}
+`;
+export const GetMunicipios = gql`
+query Municipios(
+	$ID_CUENTA: Int!
+	){
+		Municipios(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+	}
+}
+`;
+export const GetCantones = gql`
+query Cantones(
+	$ID_CUENTA: Int!
+	){
+		Cantones(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Canton
+	}
+}
+`;
+export const GetTipoDocumento = gql`
+query TipoDocumento(
+	$ID_CUENTA: Int!
+	){
+		TipoDocumento(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Tipo
+	}
+}
+`;
