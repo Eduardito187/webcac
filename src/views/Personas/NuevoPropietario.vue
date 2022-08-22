@@ -25,6 +25,14 @@
                                         <b-form-input id="Complemento"></b-form-input>
                                     </b-form-group>
                                 </div>
+                                <div class="d-flex justify-content-between">
+                                    <b-form-group class="col-md-5" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Direccion"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-5" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
+                                        <Zonas :Nombre="''" />
+                                    </b-form-group>
+                                </div>
                             </a-col>
                             <a-col :span="6" :style="{padding:'5px'}">
                                 <div class="d-flex justify-content-between">
@@ -37,20 +45,17 @@
                         <a-row>
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between">
-                                    <b-form-group class="col-md-3" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Direccion"></b-form-input>
+                                    <b-form-group class="col-md-3" label="Barrio" label-for="Barrio" label-cols-sm="12" label-align-sm="right" >
+                                        <Barrios :Nombre="''" />
                                     </b-form-group>
-                                    <b-form-group class="col-md-2" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Zona"></b-form-input>
-                                    </b-form-group>
-                                    <b-form-group class="col-md-2" label="Barrio" label-for="Barrio" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Barrio"></b-form-input>
-                                    </b-form-group>
-                                    <b-form-group class="col-md-2" label="Calle" label-for="Calle" label-cols-sm="12" label-align-sm="right" >
+                                    <b-form-group class="col-md-3" label="Calle" label-for="Calle" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Calle"></b-form-input>
                                     </b-form-group>
-                                    <b-form-group class="col-md-1" label="N~ de Casa" label-for="NCasa" label-cols-sm="12" label-align-sm="right" >
+                                    <b-form-group class="col-md-2" label="N~ de Casa" label-for="NCasa" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="NCasa"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-2" label="UV" label-for="UV" label-cols-sm="12" label-align-sm="right" >
+                                        <Uvs :Nombre="''" />
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -91,6 +96,9 @@
 </template>
 <script>
 import Imagen from './Componentes/Imagen.vue';
+import Zonas from '../Departamento/Componentes/Zonas.vue';
+import Barrios from '../Departamento/Componentes/Barrios.vue';
+import Uvs from '../Departamento/Componentes/Uvs.vue';
 import TipoDocumento from './Componentes/TipoDocumento.vue';
 import Cantones from '../Departamento/Componentes/Cantones.vue';
 import Departamentos from '../Departamento/Componentes/Departamentos.vue';
@@ -102,7 +110,7 @@ export default {
             validacionR: false
         };
     },
-    components:{ Imagen, TipoDocumento, Cantones, Departamentos, Municipios, Provincias },
+    components:{ Imagen, TipoDocumento, Cantones, Departamentos, Municipios, Provincias, Zonas, Barrios, Uvs },
     methods: {
     },
     async created() {

@@ -1,8 +1,9 @@
 <template>
     <div class="Tabla">
         <a-row>
-            <a-col :span="18">
-                <Nuevo />
+            <a-col :span="18" :style="{display:'flex'}">
+                <Nuevo :URL="'/NuevaReferencia'" :Nombre="'Nueva Referencia'" />
+                <Nuevo :URL="'/NuevoPropietario'" :Nombre="'Nuevo Propietario'" />
             </a-col>
             <a-col :span="6">
                 <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />

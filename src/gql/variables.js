@@ -486,3 +486,39 @@ query TipoDocumento(
 	}
 }
 `;
+export const GetZonas = gql`
+query Zonas(
+	$ID_CUENTA: Int!
+	){
+		Zonas(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Zona
+	}
+}
+`;
+export const GetBarrios = gql`
+query Barrios(
+	$ID_CUENTA: Int!
+	){
+		Barrios(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Barrio
+	}
+}
+`;
+export const GetUVS = gql`
+query UVS(
+	$ID_CUENTA: Int!
+	){
+		UVS(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		UV
+	}
+}
+`;
