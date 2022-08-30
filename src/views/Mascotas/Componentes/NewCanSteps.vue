@@ -9,19 +9,9 @@
           <NuevoCan v-else />
       </div>
       <div class="steps-action">
-        <a-button v-if="current < steps.length - 1" type="primary" @click="next">
-          Next
-        </a-button>
-        <a-button
-          v-if="current == steps.length - 1"
-          type="primary"
-          @click="$message.success('Processing complete!')"
-        >
-          Done
-        </a-button>
-        <a-button v-if="current > 0" style="margin-left: 8px" @click="prev">
-          Previous
-        </a-button>
+        <a-button v-if="current < steps.length - 1" type="primary" @click="next">Next</a-button>
+        <a-button v-if="current == steps.length - 1" type="primary" @click="$message.success('Processing complete!')">Done</a-button>
+        <a-button v-if="current > 0" style="margin-left: 8px" @click="prev">Previous</a-button>
       </div>
     </div>
 </template>
