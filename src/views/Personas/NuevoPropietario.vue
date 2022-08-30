@@ -81,8 +81,23 @@
                         <a-row>
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between">
-                                    <b-form-group class="col-md-12" :style="{padding:'10px'}" label="Departamento" label-for="Departamentos" label-cols-sm="12" label-align-sm="right" >
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1597.7021055488115!2d-63.144498993701845!3d-17.74476058815136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e647d1170425%3A0xe8ac0be7e9b82c74!2sCyberSpace%20Internet!5e0!3m2!1ses!2sbo!4v1661070776409!5m2!1ses!2sbo" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <b-form-group class="col-md-4" label="Latitud" label-for="Latitud" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Latitud" v-model="coordinates.lat"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-4" label="Longitud" label-for="Longitud" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Longitud" v-model="coordinates.lng"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-2" label-cols-sm="12" label-align-sm="right">
+                                        <b-button @click="getLocation()" pill variant="success" :style="{marginTop:'20px'}" >Ver Mapa</b-button>
+                                    </b-form-group>
+                                </div>
+                            </a-col>
+                            <a-col :span="24" v-if="mapVisible">
+                                <div class="d-flex justify-content-between">
+                                    <b-form-group class="col-md-12" :style="{padding:'10px'}" label-cols-sm="12" label-align-sm="right" >
+                                        <GmapMap ref="mapRef" :center="{lat:coordinates.lat, lng:coordinates.lng}" :zoom="10" map-type-id="terrain" style="width:100%;height:300px;">
+                                            <GmapMarker :position="{lat:coordinates.lat, lng:coordinates.lng}" :draggable="true" @dragend="updateCoordinates" />
+                                        </GmapMap>
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -104,14 +119,42 @@ import Cantones from '../Departamento/Componentes/Cantones.vue';
 import Departamentos from '../Departamento/Componentes/Departamentos.vue';
 import Municipios from '../Departamento/Componentes/Municipios.vue';
 import Provincias from '../Departamento/Componentes/Provincias.vue';
+
 export default {
     data() {
         return {
-            validacionR: false
+            validacionR: false,
+            mapVisible: false,
+            coordinates: {lat: null, lng: null},
         };
     },
     components:{ Imagen, TipoDocumento, Cantones, Departamentos, Municipios, Provincias, Zonas, Barrios, Uvs },
     methods: {
+        updateCoordinates(location) {
+            this.coordinates = {
+                lat: location.latLng.lat(),
+                lng: location.latLng.lng(),
+            };
+            console.log(this.coordinates);
+        },
+        SetChangeMap(){
+            this.$refs.mapRef.$mapPromise.then((map) => {
+                map.panTo({lat: -17.7580952, lng: -63.144316})
+            });
+        },
+        getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position)=> {
+                    this.SetshowPosition(position.coords);
+                });
+            }else{
+                alert("No");
+            }
+        },
+        SetshowPosition(position) {
+            this.coordinates = {lat:position.latitude,lng:position.longitude};
+            this.mapVisible = true;
+        }
     },
     async created() {
         if (localStorage.id_cuenta!=null) {
