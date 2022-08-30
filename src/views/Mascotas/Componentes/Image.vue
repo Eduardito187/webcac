@@ -59,8 +59,8 @@ export default {
 </script>
 <style>
     .avatar-uploader > .ant-upload {
-        width: 128px;
-        height: 128px;
+        width: 128px !important;
+        height: 128px !important;
     }
     .ant-upload-select-picture-card i {
         font-size: 32px;
