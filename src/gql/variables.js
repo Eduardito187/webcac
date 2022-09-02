@@ -522,3 +522,51 @@ query UVS(
 	}
 }
 `;
+export const CreatePropietario = gql`
+mutation CreatePropietario(
+	$ID_CUENTA: Int!
+	$Nombre: String!
+	$Apellidos: String!
+	$TipoDocumento: Int!
+	$Numero: String!
+	$Complemento: String!
+	$Direccion: String!
+	$Zona: Int!
+	$Barrio: String!
+	$Calle: String!
+	$NumCasa: String!
+	$Uv: Int!
+	$Parentesco: String!
+	$Telefono: String!
+	$Departamento: Int!
+	$Provincia: Int!
+	$Municipio: Int!
+	$Canton: Int!
+	$Latitud: String!
+	$Longitud: String!
+) {
+	CreatePropietario(
+		ID_CUENTA: $ID_CUENTA
+		Nombre: $Nombre
+		Apellidos: $Apellidos
+		TipoDocumento: $TipoDocumento
+		Numero: $Numero
+		Complemento: $Complemento
+		Direccion: $Direccion
+		Zona: $Zona
+		Barrio: $Barrio
+		Calle: $Calle
+		NumCasa: $NumCasa
+		Uv: $Uv
+		Parentesco: $Parentesco
+		Telefono: $Telefono
+		Departamento: $Departamento
+		Provincia: $Provincia
+		Municipio: $Municipio
+		Canton: $Canton
+		Latitud: $Latitud
+		Longitud: $Longitud
+  ) {
+		response
+  }
+}`;
