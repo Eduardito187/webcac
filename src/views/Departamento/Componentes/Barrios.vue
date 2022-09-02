@@ -1,7 +1,7 @@
 <template>
     <a-spin :spinning="cargando">
-    <a-select show-search placeholder="Seleccione un elemento" v-model="ValorDato" option-filter-prop="children" style="width: 100%">
-            <a-select-option v-for="i in Barrios" :key="i.ID" :value="i.Barrio">
+    <a-select show-search placeholder="Seleccione un elemento" v-model="ValorDato" @change="ChangeSelect" option-filter-prop="children" style="width: 100%">
+            <a-select-option v-for="i in Barrios" :key="i.ID" :value="i.ID">
                 {{i.Barrio}}
             </a-select-option>
         </a-select>
@@ -24,6 +24,11 @@ export default {
         }
     },
     methods: {
+        ChangeSelect(e){
+            if (e != null) {
+                this.$emit('recibir_evento',{Tipo:"Barrio",Data:e});
+            }
+        },
         ObtenerIDJerarquia(value){
             for (let index = 0; index < this.Barrios.length; index++) {
                 if (this.Barrios[index]["Barrio"]==value) {
