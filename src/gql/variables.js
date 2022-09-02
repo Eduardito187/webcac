@@ -532,7 +532,7 @@ mutation CreatePropietario(
 	$Complemento: String!
 	$Direccion: String!
 	$Zona: Int!
-	$Barrio: String!
+	$Barrio: Int!
 	$Calle: String!
 	$NumCasa: String!
 	$Uv: Int!
@@ -544,6 +544,7 @@ mutation CreatePropietario(
 	$Canton: Int!
 	$Latitud: String!
 	$Longitud: String!
+	$Distrito: String!
 ) {
 	CreatePropietario(
 		ID_CUENTA: $ID_CUENTA
@@ -566,6 +567,7 @@ mutation CreatePropietario(
 		Canton: $Canton
 		Latitud: $Latitud
 		Longitud: $Longitud
+		Distrito: $Distrito
   ) {
 		response
   }
