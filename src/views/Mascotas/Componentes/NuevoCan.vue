@@ -71,8 +71,8 @@
                         </a-row>
                         <a-row>
                             <a-col :span="24" :style="{marginTop:'20px'}">
-                                <b-button :disabled="validacionR" pill variant="warning" :style="{marginRight:'20px'}" >Atras</b-button>
-                                <b-button :disabled="validacionR" pill variant="primary" >Registrar</b-button>
+                                <b-button v-if="current > 0" @click="IrAntes()" pill variant="warning" :style="{marginTop:'20px',marginRight:'20px'}" >Anterior</b-button>
+                                <b-button v-if="current < 3" pill @click="ValidarSiguiente()" variant="success" :style="{marginTop:'20px'}" >Siguiente</b-button>
                             </a-col>
                         </a-row>
                     </b-form-group>
@@ -91,8 +91,25 @@ export default {
             validacionR: false
         };
     },
+    props:{
+        current:{
+            type: Number,
+            default: Number
+        }
+    },
     components:{ Select, Vacunas, Imagen },
     methods: {
+        IrAntes(){
+            this.$emit('evento_antes');
+        },
+        miValidacion(){
+            return true;
+        },
+        ValidarSiguiente(){
+            if (this.miValidacion()) {
+                this.$emit('evento_siguiente');
+            }
+        },
     },
     async created() {
         if (localStorage.id_cuenta!=null) {

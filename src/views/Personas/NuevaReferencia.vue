@@ -88,7 +88,8 @@
                                 </div>
                             </a-col>
                         </a-row>
-                        <b-button :disabled="validacionR" pill variant="primary" :style="{marginTop:'20px'}" >Siguiente</b-button >
+                        <b-button v-if="current > 0" @click="IrAntes()" pill variant="warning" :style="{marginTop:'20px',marginRight:'20px'}" >Anterior</b-button>
+                        <b-button v-if="current < 3" pill @click="ValidarSiguiente()" variant="success" :style="{marginTop:'20px'}" >Siguiente</b-button>
                     </b-form-group>
                 </b-overlay>
             </div>
@@ -111,8 +112,25 @@ export default {
             validacionR: false
         };
     },
+    props:{
+        current:{
+            type: Number,
+            default: Number
+        }
+    },
     components:{ Imagen, TipoDocumento, Cantones, Departamentos, Municipios, Provincias, Zonas, Barrios, Uvs },
     methods: {
+        IrAntes(){
+            this.$emit('evento_antes');
+        },
+        miValidacion(){
+            return true;
+        },
+        ValidarSiguiente(){
+            if (this.miValidacion()) {
+                this.$emit('evento_siguiente');
+            }
+        },
     },
     async created() {
         if (localStorage.id_cuenta!=null) {

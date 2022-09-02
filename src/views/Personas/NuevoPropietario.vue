@@ -46,7 +46,7 @@
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-3" label="Barrio" label-for="Barrio" label-cols-sm="12" label-align-sm="right" >
-                                        <Barrios :Nombre="''" />
+                                        <Barrios @Value="" :Nombre="''" />
                                     </b-form-group>
                                     <b-form-group class="col-md-3" label="Calle" label-for="Calle" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Calle"></b-form-input>
@@ -55,7 +55,7 @@
                                         <b-form-input id="NCasa"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-2" label="UV" label-for="UV" label-cols-sm="12" label-align-sm="right" >
-                                        <Uvs :Nombre="''" />
+                                        <Uvs @Value="" :Nombre="''" />
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -82,10 +82,10 @@
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-4" label="Latitud" label-for="Latitud" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Latitud" v-model="coordinates.lat"></b-form-input>
+                                        <b-form-input id="Latitud" v-model="Form.Latitud"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-4" label="Longitud" label-for="Longitud" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Longitud" v-model="coordinates.lng"></b-form-input>
+                                        <b-form-input id="Longitud" v-model="Form.Longitud"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-2" label-cols-sm="12" label-align-sm="right">
                                         <b-button @click="getLocation()" pill variant="success" :style="{marginTop:'20px'}" >Ver Mapa</b-button>
@@ -102,7 +102,8 @@
                                 </div>
                             </a-col>
                         </a-row>
-                        <b-button :disabled="validacionR" pill variant="primary" :style="{marginTop:'20px'}" >Siguiente</b-button >
+                        <b-button v-if="current > 0" @click="IrAntes()" pill variant="warning" :style="{marginTop:'20px',marginRight:'20px'}" >Anterior</b-button>
+                        <b-button v-if="current < 3" pill @click="ValidarSiguiente()" variant="success" :style="{marginTop:'20px'}" >Siguiente</b-button>
                     </b-form-group>
                 </b-overlay>
             </div>
@@ -119,28 +120,80 @@ import Cantones from '../Departamento/Componentes/Cantones.vue';
 import Departamentos from '../Departamento/Componentes/Departamentos.vue';
 import Municipios from '../Departamento/Componentes/Municipios.vue';
 import Provincias from '../Departamento/Componentes/Provincias.vue';
-
+import {CreatePropietario} from './../../gql/variables';
 export default {
     data() {
         return {
             validacionR: false,
             mapVisible: false,
             coordinates: {lat: null, lng: null},
+            Form: {
+                ID_CUENTA:parseInt(localStorage.id_cuenta),
+                Nombre: "",
+                Apellidos: "",
+                TipoDocumento: "",
+                Complemento: "",
+                Direccion: "",
+                Zona: "",
+                Barrio: "",
+                Calle: "",
+                NumCasa: "",
+                Uv: "",
+                Parentesco: "",
+                Telefono: "",
+                Departamento: "",
+                Provincia: "",
+                Municipio: "",
+                Canton: "",
+                Latitud: "",
+                Longitud: ""
+            }
         };
+    },
+    props:{
+        current:{
+            type: Number,
+            default: Number
+        }
     },
     components:{ Imagen, TipoDocumento, Cantones, Departamentos, Municipios, Provincias, Zonas, Barrios, Uvs },
     methods: {
+        IrAntes(){
+            this.$emit('evento_antes');
+        },
+        async miValidacion(){
+            this.validacionR = true;
+            await this.$apollo.mutate({mutation: CreatePropietario,
+                variables: this.Form
+            }).then(result => {
+                if (result.data.CreatePropietario!=null) {
+                    if (result.data.CreatePropietario.response) {
+                        this.$notification["success"]({
+                            message: 'CAC',
+                            description: "Propietario registrado exitosamente."
+                        });
+                        this.validacionR = false;
+                        this.$emit('evento_siguiente');
+                    }else{
+                        this.$notification["error"]({
+                            message: 'CAC',
+                            description: "Error al registrar."
+                        });
+                    }
+                }
+            });
+        },
+        ValidarSiguiente(){
+            this.$emit('evento_siguiente');
+            //this.miValidacion();
+        },
         updateCoordinates(location) {
             this.coordinates = {
                 lat: location.latLng.lat(),
                 lng: location.latLng.lng(),
             };
-            console.log(this.coordinates);
-        },
-        SetChangeMap(){
-            this.$refs.mapRef.$mapPromise.then((map) => {
-                map.panTo({lat: -17.7580952, lng: -63.144316})
-            });
+            this.Form.Latitud = location.latLng.lat();
+            this.Form.Longitud = location.latLng.lng();
         },
         getLocation() {
             if (navigator.geolocation) {
