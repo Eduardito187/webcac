@@ -201,7 +201,8 @@ export default {
                     variables: this.Form
                 }).then(result => {
                     if (result.data.CreateReferencia!=null) {
-                        if (result.data.CreateReferencia.response) {
+                        if (result.data.CreateReferencia.number) {
+                            localStorage.ID_REFERENCIA = result.data.CreateReferencia.number;
                             this.$notification["success"]({
                                 message: 'CAC',
                                 description: "referencia registrada exitosamente."
