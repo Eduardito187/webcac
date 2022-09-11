@@ -21,16 +21,19 @@
                                     <b-form-group class="col-md-3" label="N~" label-for="N~" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="N~" @change="a=>Form.Numero=a"></b-form-input>
                                     </b-form-group>
-                                    <b-form-group class="col-md-3" label="Complemento" label-for="Complemento" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Complemento" @change="a=>Form.Complemento=a"></b-form-input>
+                                    <b-form-group class="col-md-3" label="Parentesco" label-for="Parentesco" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Parentesco" @change="a=>Form.Parentesco=a"></b-form-input>
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <b-form-group class="col-md-5" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
+                                    <b-form-group class="col-md-3" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Direccion" @change="a=>Form.Direccion=a"></b-form-input>
                                     </b-form-group>
-                                    <b-form-group class="col-md-5" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
+                                    <b-form-group class="col-md-3" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
                                         <Zonas @recibir_evento="RecibivirData($event)" :Nombre="''" />
+                                    </b-form-group>
+                                    <b-form-group class="col-md-3" label="Complemento" label-for="Complemento" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Complemento" @change="a=>Form.Complemento=a"></b-form-input>
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -129,6 +132,7 @@ export default {
             coordinates: {lat: null, lng: null},
             Form: {
                 ID_CUENTA:parseInt(localStorage.id_cuenta),
+                Parentesco: "",
                 Nombre: "",
                 Apellidos: "",
                 TipoDocumento: "",
@@ -149,7 +153,7 @@ export default {
                 Latitud: "",
                 Longitud: "",
                 Distrito: "",
-                Propietario: localStorage.ID_PROPIETARIO
+                Propietario: parseInt(localStorage.ID_PROPIETARIO)
             }
         };
     },
@@ -188,8 +192,8 @@ export default {
             if (this.Form.ID_CUENTA != null && this.Form.Nombre != "" && this.Form.Apellidos != "" && this.Form.TipoDocumento != ""
             && this.Form.Numero != "" && this.Form.Complemento != "" && this.Form.Direccion != "" 
             && this.Form.Zona != "" && this.Form.Barrio != "" && this.Form.Calle != "" && this.Form.NumCasa != "" && this.Form.Uv != "" 
-            && this.Form.Telefono != "" && this.Form.Departamento != "" && this.Form.Provincia != "" && this.Form.Municipio != "" 
-            && this.Form.Canton != "" && this.Form.Distrito != "" && localStorage.ID_PROPIETARIO != null){
+            && this.Form.Departamento != "" && this.Form.Provincia != "" && this.Form.Municipio != "" 
+            && this.Form.Canton != "" && localStorage.ID_PROPIETARIO != null){
                 return true;
             }
             return false;

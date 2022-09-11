@@ -187,8 +187,7 @@ export default {
             if (this.Form.ID_CUENTA != null && this.Form.Nombre != "" && this.Form.Apellidos != "" && this.Form.TipoDocumento != ""
             && this.Form.Numero != "" && this.Form.Complemento != "" && this.Form.Direccion != "" 
             && this.Form.Zona != "" && this.Form.Barrio != "" && this.Form.Calle != "" && this.Form.NumCasa != "" && this.Form.Uv != "" 
-            && this.Form.Telefono != "" && this.Form.Departamento != "" && this.Form.Provincia != "" && this.Form.Municipio != "" 
-            && this.Form.Canton != "" && this.Form.Distrito != ""){
+            && this.Form.Departamento != "" && this.Form.Provincia != "" && this.Form.Municipio != "" && this.Form.Canton != ""){
                 return true;
             }
             return false;

@@ -17,7 +17,7 @@ import NuevoPropietario from '../../Personas/NuevoPropietario.vue';
 export default {
     data() {
       return {
-        current: 2,
+        current: 0,
         steps: [
           {
             title: 'Propietario',
@@ -43,6 +43,14 @@ export default {
         this.current--;
       },
     },
+    created(){
+      if (localStorage.ID_REFERENCIA != null) {
+        this.current = 2;
+      }
+      if (localStorage.ID_PROPIETARIO != null) {
+        this.current = 1;
+      }
+    }
   };
   </script>
   <style scoped>
