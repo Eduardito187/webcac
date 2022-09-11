@@ -183,27 +183,45 @@ export default {
         IrAntes(){
             this.$emit('evento_antes');
         },
+        ValidarForm(){
+            if (this.Form.ID_CUENTA != null && this.Form.Nombre != "" && this.Form.Apellidos != "" && this.Form.TipoDocumento != ""
+            && this.Form.Numero != "" && this.Form.Complemento != "" && this.Form.Direccion != "" 
+            && this.Form.Zona != "" && this.Form.Barrio != "" && this.Form.Calle != "" && this.Form.NumCasa != "" && this.Form.Uv != "" 
+            && this.Form.Telefono != "" && this.Form.Departamento != "" && this.Form.Provincia != "" && this.Form.Municipio != "" 
+            && this.Form.Canton != "" && this.Form.Distrito != ""){
+                return true;
+            }
+            return false;
+        },
         async miValidacion(){
-            this.validacionR = true;
-            await this.$apollo.mutate({mutation: CreatePropietario,
-                variables: this.Form
-            }).then(result => {
-                if (result.data.CreatePropietario!=null) {
-                    if (result.data.CreatePropietario.response) {
-                        this.$notification["success"]({
-                            message: 'CAC',
-                            description: "Propietario registrado exitosamente."
-                        });
-                        this.validacionR = false;
-                        this.$emit('evento_siguiente');
-                    }else{
-                        this.$notification["error"]({
-                            message: 'CAC',
-                            description: "Error al registrar."
-                        });
+            if (this.ValidarForm()) {
+                this.validacionR = true;
+                await this.$apollo.mutate({mutation: CreatePropietario,
+                    variables: this.Form
+                }).then(result => {
+                    if (result.data.CreatePropietario!=null) {
+                        if (result.data.CreatePropietario.number != null && result.data.CreatePropietario.number > 0) {
+                            localStorage.ID_PROPIETARIO = result.data.CreatePropietario.number;
+                            this.$notification["success"]({
+                                message: 'CAC',
+                                description: "Propietario registrado exitosamente."
+                            });
+                            this.validacionR = false;
+                            this.$emit('evento_siguiente');
+                        }else{
+                            this.$notification["error"]({
+                                message: 'CAC',
+                                description: "Error al registrar."
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                this.$notification["error"]({
+                    message: 'CAC',
+                    description: "Rellene toda la informacion."
+                });
+            }
         },
         ValidarSiguiente(){
             //this.$emit('evento_siguiente');

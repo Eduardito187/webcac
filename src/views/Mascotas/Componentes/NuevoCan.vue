@@ -8,31 +8,31 @@
                             <a-col :span="18">
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Nombre" label-for="Nombre" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Nombre"></b-form-input>
+                                        <b-form-input id="Nombre" v-model="Form.Nombre"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-5" label="Raza:" label-for="Raza" label-cols-sm="12" label-align-sm="right" >
-                                        <Select Nombre="Nada" />
+                                        <Select @recibir_evento="RecibivirData($event)" Nombre="" />
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Edad de Registro" label-for="Registro" label-cols-sm="12" label-align-sm="right" >
-                                        <a-input-number id="Registro"/>
+                                        <a-input-number id="Registro" v-model="Form.EdadRegistro"/>
                                     </b-form-group>
                                     <b-form-group class="col-md-5" label="Edad Actual" label-for="Actual" label-cols-sm="12" label-align-sm="right" >
-                                        <a-input-number id="Registro"/>
+                                        <a-input-number id="Actual" v-model="Form.Anho"/>
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Tamanho" label-for="Tamanho" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Tamanho"></b-form-input>
+                                        <b-form-input id="Tamanho" v-model="Form.Tamanho"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-5" label="Numero de Chip" label-for="chip" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="chip"></b-form-input>
+                                        <b-form-input id="chip" v-model="Form.Chip"></b-form-input>
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Color" label-for="Color" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Color"></b-form-input>
+                                        <b-form-input id="Color" v-model="Form.Color"></b-form-input>
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -59,7 +59,7 @@
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between mb-2">
                                     <b-form-group class="col-md-12" label="Caracteristicas:" label-for="Caracteristicas" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-textarea id="Caracteristicas" placeholder="Caracteristicas.." rows="3" max-rows="3" ></b-form-textarea>
+                                        <b-form-textarea id="Caracteristicas" v-model="Form.Caracteristica" placeholder="Caracteristicas.." rows="3" max-rows="3" ></b-form-textarea>
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
@@ -88,7 +88,21 @@ import Imagen from './Image.vue';
 export default {
     data() {
         return {
-            validacionR: false
+            validacionR: false,
+            Form:{
+                ID_CUENTA: parseInt(localStorage.id_cuenta),
+                Propietario: parseInt(localStorage.ID_PROPIETARIO),
+                Nombre: "",
+                Raza: "",
+                EdadRegistro: "",
+                Anho: "",
+                Tamanho: "",
+                Chip: "",
+                Color: "",
+                Sexo: "",
+                Tatuaje: "",
+                Caracteristica: ""
+            }
         };
     },
     props:{
@@ -99,6 +113,12 @@ export default {
     },
     components:{ Select, Vacunas, Imagen },
     methods: {
+        RecibivirData(obj){
+            if (obj.Tipo == "Razas") {
+                this.Form.Raza = parseInt(obj.Data);
+            }
+            console.log(this.Form);
+        },
         IrAntes(){
             this.$emit('evento_antes');
         },

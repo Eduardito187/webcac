@@ -17,7 +17,7 @@ import NuevoPropietario from '../../Personas/NuevoPropietario.vue';
 export default {
     data() {
       return {
-        current: 0,
+        current: 2,
         steps: [
           {
             title: 'Propietario',

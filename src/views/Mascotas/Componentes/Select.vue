@@ -1,7 +1,7 @@
 <template>
     <a-spin :spinning="cargando">
-    <a-select show-search placeholder="Seleccione un elemento" v-model="ValorDato" option-filter-prop="children" style="width: 100%">
-            <a-select-option v-for="i in Mascotas" :key="i.ID" :value="i.Nombre">
+    <a-select show-search placeholder="Seleccione un elemento" v-model="ValorDato" @change="ChangeSelect" option-filter-prop="children" style="width: 100%">
+            <a-select-option v-for="i in Mascotas" :key="i.ID" :value="i.ID">
                 {{i.Nombre}}
             </a-select-option>
         </a-select>
@@ -24,6 +24,11 @@ export default {
         }
     },
     methods: {
+        ChangeSelect(e){
+            if (e != null) {
+                this.$emit('recibir_evento',{Tipo:"Razas",Data:e});
+            }
+        },
         ObtenerIDJerarquia(value){
             for (let index = 0; index < this.Mascotas.length; index++) {
                 if (this.Mascotas[index]["Nombre"]==value) {
