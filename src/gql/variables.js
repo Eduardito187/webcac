@@ -624,3 +624,175 @@ mutation CreateReferencia(
 	number
   }
 }`;
+export const CreateCan = gql`
+mutation CreateCan(
+	$ID_CUENTA: Int!
+	$Propietario: Int!
+	$Nombre: String!
+	$Raza: Int!
+	$Tamanho: String!
+	$Anho: Int!
+	$Sexo: Int!
+	$Color: String!
+	$Chip: String!
+	$Tatuaje: String!
+	$Caracteristica: String!
+) {
+	CreateCan(
+		ID_CUENTA: $ID_CUENTA
+		Propietario: $Propietario
+		Nombre: $Nombre
+		Raza: $Raza
+		Tamanho: $Tamanho
+		Anho: $Anho
+		Sexo: $Sexo
+		Color: $Color
+		Chip: $Chip
+		Tatuaje: $Tatuaje
+		Caracteristica: $Caracteristica
+  ) {
+	number
+  }
+}`;
+export const GetSexos = gql`
+query Sexos($ID_CUENTA: Int!){
+	Sexos(ID_CUENTA: $ID_CUENTA) {
+		ID
+		Sexo
+	}
+}
+`;
+export const GetReferencias = gql`
+query Referencias($ID_CUENTA: Int!){
+	Referencias(ID_CUENTA: $ID_CUENTA) {
+		ID
+		Nombre
+		Apellido
+		CI
+		Telefono
+		Direccion {
+			ID
+			Zona {
+				ID
+				Zona
+			}
+			Barrio {
+				ID
+				Barrio
+			}
+			Calle
+			Casa
+			Geo {
+				ID
+				Latitud
+				Longitud
+			}
+			Municipio {
+				ID
+				Nombre
+				Provincia
+			}
+			Distrito {
+				ID
+				Distrito
+			}
+			Uv {
+				ID
+				UV
+			}
+			Canton {
+				ID
+				Canton
+			}
+		}
+		TipoDocumento {
+			ID
+			Tipo
+		}
+		Propietarios {
+			ID
+			Referencia {
+				ID
+				Nombre
+				Apellido
+				CI
+				Telefono
+			}
+			Propietario {
+				ID
+				Nombre
+				Apellido
+				CI
+				Telefono
+			}
+		}
+	}
+}
+`;
+export const GetPropietarios = gql`
+query Propietarios($ID_CUENTA: Int!){
+	Propietarios(ID_CUENTA: $ID_CUENTA) {
+		ID
+		Nombre
+		Apellido
+		CI
+		Telefono
+		Direccion {
+			ID
+			Zona {
+				ID
+				Zona
+			}
+			Barrio {
+				ID
+				Barrio
+			}
+			Calle
+			Casa
+			Geo {
+				ID
+				Latitud
+				Longitud
+			}
+			Municipio {
+				ID
+				Nombre
+				Provincia
+			}
+			Distrito {
+				ID
+				Distrito
+			}
+			Uv {
+				ID
+				UV
+			}
+			Canton {
+				ID
+				Canton
+			}
+		}
+		TipoDocumento {
+			ID
+			Tipo
+		}
+		Referencias {
+			ID
+			Referencia {
+				ID
+				Nombre
+				Apellido
+				CI
+				Telefono
+			}
+			Propietario {
+				ID
+				Nombre
+				Apellido
+				CI
+				Telefono
+			}
+		}
+	}
+}
+`;

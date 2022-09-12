@@ -1,22 +1,22 @@
 <template>
-    <div class="Personas">
+    <div class="Referencias">
         <a-spin :spinning="cargando">
-            <Tabla />
+            <TablaReferencias />
         </a-spin>
     </div>
 </template>
 <script>
 import {GetBitacoralist} from "./../../gql/variables";
-import Tabla from "./Componentes/Tabla.vue";
+import TablaReferencias from "./Componentes/TablaReferencias.vue";
 export default {
-    name: "Personas",
+    name: "Referencias",
     data() {
         return {
             cargando: true,
             Bitacoras:[]
         }
     },
-    components:{Tabla},
+    components:{TablaReferencias},
     methods:{
         AccederURL (a){
             this.$router.push(a);

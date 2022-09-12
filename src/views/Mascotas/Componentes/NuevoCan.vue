@@ -16,10 +16,10 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Edad de Registro" label-for="Registro" label-cols-sm="12" label-align-sm="right" >
-                                        <a-input-number id="Registro" v-model="Form.EdadRegistro"/>
+                                        <a-input-number id="Registro" :style="{width: '100%'}" v-model="Form.EdadRegistro"/>
                                     </b-form-group>
                                     <b-form-group class="col-md-5" label="Edad Actual" label-for="Actual" label-cols-sm="12" label-align-sm="right" >
-                                        <a-input-number id="Actual" v-model="Form.Anho"/>
+                                        <a-input-number id="Actual" :style="{width: '100%'}" v-model="Form.Anho"/>
                                     </b-form-group>
                                 </div>
                                 <div class="d-flex justify-content-between">
@@ -33,6 +33,9 @@
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-5" label="Color" label-for="Color" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Color" v-model="Form.Color"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-5" label="Sexo" label-for="Sexo" label-cols-sm="12" label-align-sm="right" >
+                                        <Sexos @recibir_evento="RecibivirData($event)" :Nombre="''" />
                                     </b-form-group>
                                 </div>
                             </a-col>
@@ -73,6 +76,9 @@
                             <a-col :span="24" :style="{marginTop:'20px'}">
                                 <b-button v-if="current > 0" @click="IrAntes()" pill variant="warning" :style="{marginTop:'20px',marginRight:'20px'}" >Anterior</b-button>
                                 <b-button v-if="current < 3" pill @click="ValidarSiguiente()" variant="success" :style="{marginTop:'20px'}" >Siguiente</b-button>
+                                <b-button v-else="current == 2" pill @click="ValidarSiguiente()" variant="success" :style="{marginTop:'20px'}" >
+                                    <b>Finalizar registro</b>
+                                </b-button>
                             </a-col>
                         </a-row>
                     </b-form-group>
@@ -85,6 +91,8 @@
 import Select from './Select.vue';
 import Vacunas from './Vacunas.vue';
 import Imagen from './Image.vue';
+import Sexos from './Sexos.vue';
+import { CreateCan } from '../../../gql/variables';
 export default {
     data() {
         return {
@@ -99,7 +107,7 @@ export default {
                 Tamanho: "",
                 Chip: "",
                 Color: "",
-                Sexo: "",
+                Sexo: null,
                 Tatuaje: "",
                 Caracteristica: ""
             }
@@ -111,24 +119,61 @@ export default {
             default: Number
         }
     },
-    components:{ Select, Vacunas, Imagen },
+    components:{ Select, Vacunas, Imagen, Sexos },
     methods: {
         RecibivirData(obj){
             if (obj.Tipo == "Razas") {
                 this.Form.Raza = parseInt(obj.Data);
+            }else if (obj.Tipo == "Sexos") {
+                this.Form.Sexo = parseInt(obj.Data);
             }
             console.log(this.Form);
         },
         IrAntes(){
             this.$emit('evento_antes');
         },
-        miValidacion(){
-            return true;
+        ValidarForm(){
+            if (this.Form.ID_CUENTA != null && this.Form.Nombre != "" && this.Form.Raza != "" && this.Form.EdadRegistro != ""
+            && this.Form.Anho != "" && this.Form.Tamanho != "" && this.Form.Chip != "" && this.Form.Propietario != null 
+            && this.Form.Color != "" && this.Form.Sexo != null && this.Form.Caracteristica != ""){
+                return true;
+            }
+            return false;
+        },
+        async miValidacion(){
+            if (this.ValidarForm()) {
+                this.validacionR = true;
+                await this.$apollo.mutate({mutation: CreateCan,
+                    variables: this.Form
+                }).then(result => {
+                    if (result.data.CreateCan!=null) {
+                        if (result.data.CreateCan.number) {
+                            localStorage.removeItem('ID_REFERENCIA');
+                            localStorage.removeItem('ID_PROPIETARIO');
+                            this.$router.push("/Mascotas");
+                            this.$notification["success"]({
+                                message: 'CAC',
+                                description: "Can registrado exitosamente."
+                            });
+                            this.validacionR = false;
+                            this.$emit('evento_siguiente');
+                        }else{
+                            this.$notification["error"]({
+                                message: 'CAC',
+                                description: "Error al registrar."
+                            });
+                        }
+                    }
+                });
+            }else{
+                this.$notification["error"]({
+                    message: 'CAC',
+                    description: "Rellene toda la informacion."
+                });
+            }
         },
         ValidarSiguiente(){
-            if (this.miValidacion()) {
-                this.$emit('evento_siguiente');
-            }
+            this.miValidacion();
         },
     },
     async created() {

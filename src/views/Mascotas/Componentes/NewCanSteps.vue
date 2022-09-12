@@ -46,9 +46,10 @@ export default {
     created(){
       if (localStorage.ID_REFERENCIA != null) {
         this.current = 2;
-      }
-      if (localStorage.ID_PROPIETARIO != null) {
-        this.current = 1;
+      }else{
+        if (localStorage.ID_PROPIETARIO != null) {
+          this.current = 1;
+        }
       }
     }
   };

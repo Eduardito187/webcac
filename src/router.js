@@ -11,7 +11,8 @@ import VistaRol from "./views/Roles/VistaRol.vue";
 import MiPerfil from "./views/Usuarios/MiPerfil.vue";
 import PanelControl from "./views/Usuarios/PanelControl.vue";
 import Bitacora from "./views/Bitacora/Bitacora.vue";
-import Personas from "./views/Personas/Personas.vue";
+import Propietarios from "./views/Personas/Propietarios.vue";
+import Referencias from "./views/Personas/Referencias.vue";
 import NuevaReferencia from "./views/Personas/NuevaReferencia.vue";
 import NuevoPropietario from "./views/Personas/NuevoPropietario.vue";
 import Mascotas from "./views/Mascotas/Mascotas.vue";
@@ -84,9 +85,14 @@ export default new Router({
             component: Bitacora
         },
         {
-            path: "/Personas",
-            name: "Personas",
-            component: Personas
+            path: "/Propietarios",
+            name: "Propietarios",
+            component: Propietarios
+        },
+        {
+            path: "/Referencias",
+            name: "Referencias",
+            component: Referencias
         },
         {
             path: "/Mascotas",

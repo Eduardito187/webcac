@@ -18,9 +18,13 @@
                     <a-icon type="qq" />
                     <span>Mascotas</span>
                 </a-menu-item>
-                <a-menu-item key="5" @click="AccederURL('/Personas')">
+                <a-menu-item key="5" @click="AccederURL('/Propietarios')">
                     <a-icon type="user" />
-                    <span>Personas</span>
+                    <span>Propietarios</span>
+                </a-menu-item>
+                <a-menu-item key="6" @click="AccederURL('/Referencias')">
+                    <a-icon type="user" />
+                    <span>Referencias</span>
                 </a-menu-item>
                 <template v-if="DATA!=null">
                     <a-menu-item v-if="DATA.RangoUsuario!=null" v-for="i in DATA.RangoUsuario" :key="i.ID+'_Permiso'">
