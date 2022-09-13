@@ -25,17 +25,6 @@
                                         <b-form-input id="Parentesco" @change="a=>Form.Parentesco=a"></b-form-input>
                                     </b-form-group>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <b-form-group class="col-md-3" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Direccion" @change="a=>Form.Direccion=a"></b-form-input>
-                                    </b-form-group>
-                                    <b-form-group class="col-md-3" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
-                                        <Zonas @recibir_evento="RecibivirData($event)" :Nombre="''" />
-                                    </b-form-group>
-                                    <b-form-group class="col-md-3" label="Complemento" label-for="Complemento" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="Complemento" @change="a=>Form.Complemento=a"></b-form-input>
-                                    </b-form-group>
-                                </div>
                             </a-col>
                             <a-col :span="6" :style="{padding:'5px'}">
                                 <div class="d-flex justify-content-between">
@@ -46,6 +35,22 @@
                             </a-col>
                         </a-row>
                         <a-row>
+                            <a-col :span="24">
+                                <div class="d-flex justify-content-between">
+                                    <b-form-group class="col-md-3" :style="{padding:'2px'}" label="Direccion" label-for="Direccion" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Direccion" @change="a=>Form.Direccion=a"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group class="col-md-3" :style="{padding:'2px'}" label="Zona" label-for="Zona" label-cols-sm="12" label-align-sm="right" >
+                                        <Zonas @recibir_evento="RecibivirData($event)" :Nombre="''" />
+                                    </b-form-group>
+                                    <b-form-group class="col-md-3" :style="{padding:'2px'}" label="Complemento" label-for="Complemento" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="Complemento" @change="a=>Form.Complemento=a"></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group v-if="Propietario == null" class="col-md-3" :style="{padding:'2px'}" label="Propietario:" label-for="Propietario" label-cols-sm="12" label-align-sm="right" >
+                                        <Zonas @recibir_evento="RecibivirData($event)" :Nombre="''" />
+                                    </b-form-group>
+                                </div>
+                            </a-col>
                             <a-col :span="24">
                                 <div class="d-flex justify-content-between">
                                     <b-form-group class="col-md-3" label="Barrio" label-for="Barrio" label-cols-sm="12" label-align-sm="right" >
@@ -153,8 +158,9 @@ export default {
                 Latitud: "",
                 Longitud: "",
                 Distrito: "",
-                Propietario: parseInt(localStorage.ID_PROPIETARIO)
-            }
+                Propietario: ""
+            },
+            Propietario: null
         };
     },
     props:{
@@ -259,6 +265,14 @@ export default {
     async created() {
         if (localStorage.id_cuenta!=null) {
             this.validacionR = false;
+        }
+        if (localStorage.ID_PROPIETARIO != null) {
+            this.Propietario = localStorage.ID_PROPIETARIO;
+        }
+    },
+    mounted(){
+        if (localStorage.ID_PROPIETARIO != null) {
+            this.Form.Propietario = parseInt(localStorage.ID_PROPIETARIO);
         }
     }
 };

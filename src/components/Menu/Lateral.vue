@@ -26,11 +26,6 @@
                     <a-icon type="user" />
                     <span>Referencias</span>
                 </a-menu-item>
-                <template v-if="DATA!=null">
-                    <a-menu-item v-if="DATA.RangoUsuario!=null" v-for="i in DATA.RangoUsuario" :key="i.ID+'_Permiso'">
-                        <span>{{i.Rango.Rango}}</span>
-                    </a-menu-item>
-                </template>
             </a-menu>
         </a-spin>
     </div>
@@ -43,7 +38,6 @@ export default {
     data() {
         return {
             id_cuenta: 0,
-            DATA:null,
             Cargando:true
         }
     },
@@ -52,20 +46,10 @@ export default {
         AccederURL (a){
             this.$router.push(a);
         },
-        async obtenerData(){
-            await this.$apollo.query({query: CuentaPermiso,variables: {
-                ID_CUENTA:parseInt(localStorage.id_cuenta),
-                ID:parseInt(this.id_cuenta)
-                },fetchPolicy: "network-only"}).then(result => {
-                this.DATA = result.data.Usuario;
-                this.Cargando = false;
-            });
-        },
     },
     created() {
         if (localStorage.id_cuenta != null) {
             this.id_cuenta = localStorage.id_cuenta;
-            this.obtenerData();
         } else {
             this.id_cuenta = 0;
         }

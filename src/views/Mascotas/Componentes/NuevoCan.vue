@@ -69,6 +69,9 @@
                                     <b-form-group class="col-md-5" label="Vacunas:" label-for="Vacunas" label-cols-sm="12" label-align-sm="right" >
                                         <Vacunas />
                                     </b-form-group>
+                                    <b-form-group v-if="Propietario == null" class="col-md-5" label="Propietario:" label-for="Propietario" label-cols-sm="12" label-align-sm="right" >
+                                        <Vacunas />
+                                    </b-form-group>
                                 </div>
                             </a-col>
                         </a-row>
@@ -99,7 +102,7 @@ export default {
             validacionR: false,
             Form:{
                 ID_CUENTA: parseInt(localStorage.id_cuenta),
-                Propietario: parseInt(localStorage.ID_PROPIETARIO),
+                Propietario: "",
                 Nombre: "",
                 Raza: "",
                 EdadRegistro: "",
@@ -110,7 +113,8 @@ export default {
                 Sexo: null,
                 Tatuaje: "",
                 Caracteristica: ""
-            }
+            },
+            Propietario: null
         };
     },
     props:{
@@ -179,6 +183,14 @@ export default {
     async created() {
         if (localStorage.id_cuenta!=null) {
             this.validacionR = false;
+        }
+        if (localStorage.ID_PROPIETARIO != null) {
+            this.Propietario = localStorage.ID_PROPIETARIO;
+        }
+    },
+    mounted(){
+        if (localStorage.ID_PROPIETARIO != null) {
+            this.Form.Propietario = parseInt(localStorage.ID_PROPIETARIO);
         }
     }
 };

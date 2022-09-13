@@ -9,7 +9,8 @@
           <a-layout-header style="background: #fff; padding: 0" >
             <a-page-header style="border: 1px solid rgb(235, 237, 240)" :title="$route.name" @back="() => $router.go(-1)">
               <template slot="extra">
-                <PerfilHeaderVue />
+                <RolCac :style="{display: 'inline-block'}" />
+                <PerfilHeaderVue :style="{display: 'inline-block'}" />
               </template>
             </a-page-header>
           </a-layout-header>
@@ -36,6 +37,7 @@ import PerfilHeaderVue from "./components/PerfilHeader.vue";
 import Panel from "./components/Panel.vue";
 import Lateral from "./components/Menu/Lateral.vue";
 import ImgLogo from "./components/Menu/ImgLogo.vue";
+import RolCac from "./components/RolCac.vue";
 export default {
   title: "CAC | APP",
   data() {
@@ -49,6 +51,7 @@ export default {
     PerfilHeaderVue,
     Panel,
     Lateral,
+    RolCac,
     ImgLogo
 },
   methods:{

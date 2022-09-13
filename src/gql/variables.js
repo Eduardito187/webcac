@@ -796,3 +796,77 @@ query Propietarios($ID_CUENTA: Int!){
 	}
 }
 `;
+export const GetCan = gql`
+query Can(
+	$ID_CUENTA: Int!
+	$ID: Int!
+	){
+	Can(
+		ID_CUENTA: $ID_CUENTA
+		ID: $ID
+	) {
+		ID
+		Nombre
+		Raza {
+		  ID
+		  Nombre
+		}
+		Tamanho {
+		  ID
+		  Tamanho
+		}
+		Meses
+		Anho
+		Propietario {
+		  ID
+		  Nombre
+		  Apellido
+		  CI
+		  Telefono
+		}
+		Sexo {
+		  ID
+		  Sexo
+		}
+		Color
+		Chip
+		Tatuaje
+	}
+}
+`;
+export const GetCanes = gql`
+query Canes(
+	$ID_CUENTA: Int!
+	){
+	Canes(
+		ID_CUENTA: $ID_CUENTA
+	) {
+		ID
+		Nombre
+		Raza {
+		  ID
+		  Nombre
+		}
+		Tamanho {
+		  ID
+		  Tamanho
+		}
+		Meses
+		Anho
+		Propietario {
+		  ID
+		  Nombre
+		  Apellido
+		  CI
+		  Telefono
+		}
+		Sexo {
+		  ID
+		  Sexo
+		}
+		Color
+		Chip
+		Tatuaje
+	}
+}
+`;

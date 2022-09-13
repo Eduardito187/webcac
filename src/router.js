@@ -17,6 +17,9 @@ import NuevaReferencia from "./views/Personas/NuevaReferencia.vue";
 import NuevoPropietario from "./views/Personas/NuevoPropietario.vue";
 import Mascotas from "./views/Mascotas/Mascotas.vue";
 import NuevaMascota from "./views/Mascotas/NuevaMascota.vue";
+import NuevoCan from "./views/Mascotas/NuevoCan.vue";
+import NewReferencia from "./views/Personas/NewReferencia.vue";
+import NewPropietario from "./views/Personas/NewPropietario.vue";
 
 /*
 "production": "vue-cli-service serve --mode production",
@@ -113,6 +116,21 @@ export default new Router({
             path: "/NuevoPropietario",
             name: "Nuevo Propietario",
             component: NuevoPropietario
+        },
+        {
+            path: "/NewMascota",
+            name: "Nueva Mascota",
+            component: NuevoCan
+        },
+        {
+            path: "/NewReferencia",
+            name: "Nueva Referencia",
+            component: NewReferencia
+        },
+        {
+            path: "/NewPropietario",
+            name: "Nuevo Propietario",
+            component: NewPropietario
         }
     ],
     linkActiveClass: "active"
