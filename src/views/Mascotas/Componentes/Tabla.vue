@@ -24,7 +24,7 @@
         <a-drawer title="Visualizador PDF" width="720" :closable="true" :visible="visible" @close="onClose" >
             <template>
                 <div>
-                    <VueHtml2pdf :show-layout="true" :float-layout="true" :enable-download="true" :preview-modal="true" :paginate-elements-by-height="1400" filename="myPDF" :pdf-quality="2" :manual-pagination="false" pdf-format="a4" pdf-orientation="landscape" pdf-content-width="720px" ref="html2Pdf" >
+                    <VueHtml2pdf :show-layout="false" :float-layout="false" :enable-download="true" :preview-modal="false" :paginate-elements-by-height="1400" filename="myPDF" :pdf-quality="2" :manual-pagination="false" pdf-format="a4" pdf-orientation="landscape" pdf-content-width="720px" ref="html2Pdf" >
                         <section slot="pdf-content">
                             <h1>HOLA</h1>
                         </section>
