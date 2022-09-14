@@ -2,7 +2,10 @@
     <div class="TablaPropietarios">
         <a-row>
             <a-col :span="18" :style="{display:'flex'}">
-                <Nuevo :URL="'/NewPropietario'" :Nombre="'Nuevo Propietario'" />
+                <Nuevo :URL="'/NewPropietario'" :Nombre="'Nuevo Propietario'" :style="{display: 'inline-block'}" />
+                <a-button @click="descargar()" :style="{display: 'inline-block',marginLeft:'10px'}" type="primary" shape="round" icon="download" :size="'large'" />
+                    <b :style="{padding:'5px'}">Exportar Data</b>
+                </a-button>
             </a-col>
             <a-col :span="6">
                 <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />
@@ -95,7 +98,7 @@ export default {
                         if (text.length > 0) {
                             for (let i = 0; i < text.length; i++) {
                                 if (text[i]["Referencia"] != null) {
-                                    res.push(<a-tag>{text[i]["Referencia"]["CI"]+" : "+text[i]["Referencia"]["Nombre"]+" "+text[i]["Referencia"]["Apellido"]+" "+text[i]["Referencia"]["Telefono"]}</a-tag>);
+                                    res.push(<a-tag>{text[i]["Referencia"]["CI"]+" : "+text[i]["Referencia"]["Nombre"]+" "+text[i]["Referencia"]["Apellido"]+" : "+text[i]["Referencia"]["Telefono"]}</a-tag>);
                                 }
                             }
                         }
@@ -117,7 +120,8 @@ export default {
             ],
             selectedRowKeys: [],
             loading: false,
-            Propietarios: []
+            Propietarios: [],
+            infor_d: []
         }
     },
     components:{Nuevo},
@@ -127,6 +131,18 @@ export default {
         },
     },
     methods:{
+        transformacion_data() {
+            this.infor_d = [];
+            for (let x = 0; x < this.Propietarios.length; x++) {
+            }
+        },
+        descargar() {
+            const data = XLSX.utils.json_to_sheet(this.infor_d);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, data, "Reporte");
+            let d = new Date();
+            XLSX.writeFile(wb, d + ".xlsx");
+        },
         onSearch(value) {
             console.log(value);
         },
@@ -152,6 +168,7 @@ export default {
             }).then(result => {
                 if (result.data.Propietarios != null) {
                     this.Propietarios=result.data.Propietarios;
+                    this.transformacion_data();
                 }
             });
         },

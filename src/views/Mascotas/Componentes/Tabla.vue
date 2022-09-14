@@ -2,7 +2,10 @@
     <div class="Tabla">
         <a-row>
             <a-col :span="18">
-                <Nuevo :URL="'/NewMascota'" :Nombre="'Nueva Mascota'" />
+                <Nuevo :URL="'/NewMascota'" :Nombre="'Nueva Mascota'" :style="{display: 'inline-block'}" />
+                <a-button @click="descargar()" :style="{display: 'inline-block',marginLeft:'10px'}" type="primary" shape="round" icon="download" :size="'large'" />
+                    <b :style="{padding:'5px'}">Exportar Data</b>
+                </a-button>
             </a-col>
             <a-col :span="6">
                 <a-input-search placeholder="Buscador" style="width: 100%;" @search="onSearch" />
@@ -18,6 +21,7 @@
 <script>
 import Nuevo from "./../../Personas/Componentes/Nuevo.vue";
 import { GetCanes } from "../../../gql/variables";
+import XLSX from "xlsx";
 export default {
     name: "Tabla",
     data() {
@@ -95,7 +99,7 @@ export default {
                     customRender: (text, row, index) => {
                         let res = [];
                         if (text != null) {
-                            res.push(<a-tag>{text.CI+" : "+text.Nombre+" "+text.Apellido+" "+text.Telefono}</a-tag>);
+                            res.push(<a-tag>{text.CI+" : "+text.Nombre+" "+text.Apellido+" : "+text.Telefono}</a-tag>);
                         }
                         return (res);
                     }
@@ -115,6 +119,7 @@ export default {
             ],
             selectedRowKeys: [],
             loading: false,
+            infor_d: []
         }
     },
     components:{Nuevo},
@@ -124,6 +129,54 @@ export default {
         },
     },
     methods:{
+        transformacion_data() {
+            this.infor_d = [];
+            for (let x = 0; x < this.DatosTabla.length; x++) {
+                let raza = "";
+                if (this.DatosTabla[x]["Raza"] != null) {
+                    raza = this.DatosTabla[x]["Raza"]["Nombre"];
+                }
+                let tamanho = "";
+                if (this.DatosTabla[x]["Tamanho"] != null) {
+                    tamanho = this.DatosTabla[x]["Tamanho"]["Tamanho"];
+                }
+                let sexo = "";
+                if (this.DatosTabla[x]["Sexo"] != null) {
+                    sexo = this.DatosTabla[x]["Sexo"]["Sexo"];
+                }
+                let Propietario_ID = "";
+                let Propietario_Nombre = "";
+                let Propietario_CI = "";
+                let Propietario_Telefono = "";
+                if (this.DatosTabla[x]["Propietario"] != null) {
+                    Propietario_CI = this.DatosTabla[x]["Propietario"]["CI"];
+                    Propietario_Nombre = this.DatosTabla[x]["Propietario"]["Nombre"]+" "+this.DatosTabla[x]["Propietario"]["Apellido"];
+                    Propietario_ID = this.DatosTabla[x]["Propietario"]["ID"];
+                    Propietario_Telefono = this.DatosTabla[x]["Propietario"]["Telefono"];
+                }
+                this.infor_d.push({
+                    "ID" : this.DatosTabla[x]["ID"],
+                    "Nombre" : this.DatosTabla[x]["Nombre"],
+                    "Chip" : this.DatosTabla[x]["Chip"],
+                    "Anho" : this.DatosTabla[x]["Anho"],
+                    "Meses" : this.DatosTabla[x]["Meses"],
+                    "Raza" : raza,
+                    "Tamanho" : tamanho,
+                    "Sexo" : sexo,
+                    "Propietario_ID" : Propietario_ID,
+                    "Propietario_Nombre" : Propietario_Nombre,
+                    "Propietario_CI" : Propietario_CI,
+                    "Propietario_Telefono" : Propietario_Telefono
+                });
+            }
+        },
+        descargar() {
+            const data = XLSX.utils.json_to_sheet(this.infor_d);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, data, "Reporte");
+            let d = new Date();
+            XLSX.writeFile(wb, d + ".xlsx");
+        },
         onSearch(value) {
             console.log(value);
         },
@@ -149,6 +202,7 @@ export default {
             }).then(result => {
                 if (result.data.Canes != null) {
                     this.DatosTabla=result.data.Canes;
+                    this.transformacion_data();
                 }
             });
         },

@@ -1,8 +1,8 @@
 <template>
     <a-spin :spinning="cargando">
         <div class="spin-content">
-            <a-select v-if="Rangos != null" label-in-value style="width: 150px" @change="imprimir_Rangos">
-                <a-select-option v-if="Rangos.RangoUsuario!=null" v-for="i in Rangos.RangoUsuario" :key="i.ID+'_Permiso'" :value="i.Rango.ID">
+            <a-select v-if="Rangos != null" label-in-value style="width: 180px" :value="{ key: this.Mi_Rango }" @change="imprimir_Rangos">
+                <a-select-option v-if="Rangos.RangoUsuario!=null" v-for="i in Rangos.RangoUsuario" :key="i.Rango.ID+'_Permiso'" :value="i.Rango.ID">
                     <b>{{i.Rango.Rango}}</b>
                 </a-select-option>
             </a-select>
@@ -16,12 +16,30 @@ export default {
         return {
             Rangos: [],
             RangoID: 0,
-            cargando: true
+            cargando: true,
+            Mi_Rango_ID : "",
+            Mi_Rango : ""
         };
     },
     methods: {
-        async imprimir_Rangos(e){
-            console.log(e);
+        imprimir_Rangos(e){
+            this.SeleccionRango(e);
+        },
+        SeleccionRango(SELECT){
+            if (this.Rangos != null) {
+                if (this.Rangos.RangoUsuario != null) {
+                    for (let index = 0; index < this.Rangos.RangoUsuario.length; index++) {
+                        if (this.Rangos.RangoUsuario[index]["Rango"] != null) {
+                            if (SELECT.key == this.Rangos.RangoUsuario[index]["Rango"]["ID"]) {
+                                localStorage.ID_RANGO_SELECT = this.Rangos.RangoUsuario[index]["Rango"]["ID"];
+                                localStorage.RANGO_SELECT = this.Rangos.RangoUsuario[index]["Rango"]["Rango"];
+                                this.Mi_Rango_ID = localStorage.ID_RANGO_SELECT;
+                                this.Mi_Rango = localStorage.RANGO_SELECT;
+                            }
+                        }
+                    }
+                }
+            }
         },
         async ObtenerRoles() {
             await this.$apollo.query({query: CuentaPermiso,variables: {
@@ -37,6 +55,10 @@ export default {
         }
     },
     async created() {
+        if (localStorage.ID_RANGO_SELECT != null && localStorage.RANGO_SELECT != null) {
+            this.Mi_Rango_ID = localStorage.ID_RANGO_SELECT;
+            this.Mi_Rango = localStorage.RANGO_SELECT;
+        }
         this.ObtenerRoles();
     }
 };

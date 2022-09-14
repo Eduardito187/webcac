@@ -53,6 +53,7 @@ export default {
         } else {
             this.id_cuenta = 0;
         }
+        this.Cargando = false;
     },
 };
 </script>
