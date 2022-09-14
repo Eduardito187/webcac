@@ -3,8 +3,12 @@
         <a-row>
             <a-col :span="18">
                 <Nuevo :URL="'/NewMascota'" :Nombre="'Nueva Mascota'" :style="{display: 'inline-block'}" />
+                <Nuevo :URL="'/NuevaMascota'" :Nombre="'Registro Simple'" :style="{display: 'inline-block'}" />
                 <a-button @click="descargar()" :style="{display: 'inline-block',marginLeft:'10px'}" type="primary" shape="round" icon="download" :size="'large'" />
                     <b :style="{padding:'5px'}">Exportar Data</b>
+                </a-button>
+                <a-button @click="showDrawer()" :style="{display: 'inline-block',marginLeft:'10px'}" type="primary" shape="round" icon="file-pdf" :size="'large'" />
+                    <b :style="{padding:'5px'}">PDF</b>
                 </a-button>
             </a-col>
             <a-col :span="6">
@@ -16,11 +20,29 @@
                 <a-table :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" :columns="columns" :data-source="DatosTabla" />
             </a-col>
         </a-row>
+
+        <a-drawer title="Visualizador PDF" width="720" :closable="true" :visible="visible" @close="onClose" >
+            <template>
+                <div>
+                    <VueHtml2pdf :show-layout="true" :float-layout="true" :enable-download="true" :preview-modal="true" :paginate-elements-by-height="1400" filename="myPDF" :pdf-quality="2" :manual-pagination="false" pdf-format="a4" pdf-orientation="landscape" pdf-content-width="720px" ref="html2Pdf" >
+                        <section slot="pdf-content">
+                            <h1>HOLA</h1>
+                        </section>
+                    </VueHtml2pdf>
+                </div>
+            </template>
+            <div :style="{position: 'absolute',bottom: 0,width: '100%',borderTop: '1px solid #e8e8e8',padding: '10px 16px',textAlign: 'right',left: 0,background: '#fff',borderRadius: '0 0 4px 4px',}">
+                <a-button type="success" @click="generateReport()">
+                    Descargar
+                </a-button>
+            </div>
+        </a-drawer>
     </div>
 </template>
 <script>
 import Nuevo from "./../../Personas/Componentes/Nuevo.vue";
 import { GetCanes } from "../../../gql/variables";
+import VueHtml2pdf from 'vue-html2pdf';
 import XLSX from "xlsx";
 export default {
     name: "Tabla",
@@ -119,16 +141,27 @@ export default {
             ],
             selectedRowKeys: [],
             loading: false,
-            infor_d: []
+            infor_d: [],
+            visible: false
         }
     },
-    components:{Nuevo},
+    components:{Nuevo,VueHtml2pdf},
     computed: {
         hasSelected() {
             return this.selectedRowKeys.length > 0;
         },
     },
     methods:{
+        generateReport () {
+            this.$refs.html2Pdf.generatePdf();
+            this.onClose();
+        },
+        showDrawer() {
+            this.visible = true;
+        },
+        onClose() {
+            this.visible = false;
+        },
         transformacion_data() {
             this.infor_d = [];
             for (let x = 0; x < this.DatosTabla.length; x++) {
