@@ -18,8 +18,8 @@
                                     <b-form-group class="col-md-4" label="Tipo de Documento" label-for="TipoDocumento" label-cols-sm="12" label-align-sm="right" >
                                         <TipoDocumento @recibir_evento="RecibivirData($event)" :Nombre="''" />
                                     </b-form-group>
-                                    <b-form-group class="col-md-3" label="N~" label-for="N~" label-cols-sm="12" label-align-sm="right" >
-                                        <b-form-input id="N~" @change="a=>Form.Numero=a"></b-form-input>
+                                    <b-form-group class="col-md-3" label="N°" label-for="N°" label-cols-sm="12" label-align-sm="right" >
+                                        <b-form-input id="N°" @change="a=>Form.Numero=a"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-3" label="Parentesco" label-for="Parentesco" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Parentesco" @change="a=>Form.Parentesco=a"></b-form-input>
@@ -59,7 +59,7 @@
                                     <b-form-group class="col-md-3" label="Calle" label-for="Calle" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="Calle" @change="a=>Form.Calle=a"></b-form-input>
                                     </b-form-group>
-                                    <b-form-group class="col-md-2" label="N~ de Casa" label-for="NCasa" label-cols-sm="12" label-align-sm="right" >
+                                    <b-form-group class="col-md-2" label="N° de Casa" label-for="NCasa" label-cols-sm="12" label-align-sm="right" >
                                         <b-form-input id="NCasa" @change="a=>Form.NumCasa=a"></b-form-input>
                                     </b-form-group>
                                     <b-form-group class="col-md-2" label="UV" label-for="UV" label-cols-sm="12" label-align-sm="right" >
