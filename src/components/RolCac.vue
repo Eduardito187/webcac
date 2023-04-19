@@ -26,6 +26,7 @@ export default {
             this.SeleccionRango(e);
         },
         SeleccionRango(SELECT){
+            console.log("select", SELECT);
             if (this.Rangos != null) {
                 if (this.Rangos.RangoUsuario != null) {
                     for (let index = 0; index < this.Rangos.RangoUsuario.length; index++) {
@@ -42,9 +43,11 @@ export default {
             }
         },
         selectPosOne(){
-            if (this.Rangos.length > 0){
-                if (this.Rangos.RangoUsuario[0]["Rango"] != null) {
-                    this.SeleccionRango(this.Rangos.RangoUsuario[0]["Rango"]["ID"]);
+            if (this.Rangos != null) {
+                if (this.Rangos.RangoUsuario != null) {
+                    if (this.Rangos.RangoUsuario.length > 0){
+                        this.SeleccionRango(this.Rangos.RangoUsuario[0]["Rango"]["ID"]);
+                    }
                 }
             }
         },
