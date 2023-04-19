@@ -46,7 +46,10 @@ export default {
             if (this.Rangos != null) {
                 if (this.Rangos.RangoUsuario != null) {
                     if (this.Rangos.RangoUsuario.length > 0){
-                        this.SeleccionRango(this.Rangos.RangoUsuario[0]["Rango"]["ID"]);
+                        localStorage.ID_RANGO_SELECT = this.Rangos.RangoUsuario[0]["Rango"]["ID"];
+                        localStorage.RANGO_SELECT = this.Rangos.RangoUsuario[0]["Rango"]["Rango"];
+                        this.Mi_Rango_ID = localStorage.ID_RANGO_SELECT;
+                        this.Mi_Rango = localStorage.RANGO_SELECT;
                     }
                 }
             }
