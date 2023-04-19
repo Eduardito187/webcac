@@ -263,6 +263,9 @@ export default {
         }
     },
     async created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
         if (localStorage.id_cuenta!=null) {
             this.validacionR = false;
         }

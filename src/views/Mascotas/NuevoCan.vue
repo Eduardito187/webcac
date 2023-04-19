@@ -28,6 +28,9 @@ export default {
     methods: {
     },
     async created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
         if (localStorage.id_cuenta!=null) {
             this.validacionR = false;
         }

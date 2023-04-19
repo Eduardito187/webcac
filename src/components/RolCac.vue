@@ -55,6 +55,9 @@ export default {
         }
     },
     async created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
         if (localStorage.ID_RANGO_SELECT != null && localStorage.RANGO_SELECT != null) {
             this.Mi_Rango_ID = localStorage.ID_RANGO_SELECT;
             this.Mi_Rango = localStorage.RANGO_SELECT;

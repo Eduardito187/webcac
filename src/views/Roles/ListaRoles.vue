@@ -16,6 +16,9 @@ export default {
     methods:{
     },
     created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
     },
 };
 </script>

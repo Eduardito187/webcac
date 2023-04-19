@@ -282,6 +282,9 @@ export default {
         },
     },
     created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
         if (this.$route.params.ID!=null) {
             this.GetUserAPI();
         }

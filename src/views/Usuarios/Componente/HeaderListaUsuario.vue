@@ -185,6 +185,9 @@ export default {
         }
     },
     created() {
+        if (localStorage.id_cuenta == null) {
+            this.$router.push("/");
+        }
         this.GetUserAPI();
     },
 };
