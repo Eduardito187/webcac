@@ -41,6 +41,13 @@ export default {
                 }
             }
         },
+        selectPosOne(){
+            if (this.Rangos.length > 0){
+                if (this.Rangos.RangoUsuario[0]["Rango"] != null) {
+                    this.SeleccionRango(this.Rangos.RangoUsuario[0]["Rango"]["ID"]);
+                }
+            }
+        },
         async ObtenerRoles() {
             await this.$apollo.query({query: CuentaPermiso,variables: {
                     ID_CUENTA:parseInt(localStorage.id_cuenta),
@@ -50,6 +57,7 @@ export default {
             )
             .then(result => {
                 this.Rangos = result.data.Usuario;
+                this.selectPosOne();
                 this.cargando = false;
             });
         }
