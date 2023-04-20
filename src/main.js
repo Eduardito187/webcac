@@ -15,7 +15,7 @@ Vue.use(Antd);
  
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyCO_IeKdjJ48PtvbbjQvC_0oMNwZFUW-Js',
+        key: 'AIzaSyDcIMHKyFXwfZ8ulP66yJgbC4o3P4l0jHI',
         libraries: 'places',
     },
     installComponents: true
