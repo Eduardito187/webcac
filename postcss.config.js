@@ -8,7 +8,13 @@ module.exports = {
         autoprefixer: {}
     },
     devServer: {
-        disableHostCheck: true
+        allowedHosts: [
+          'localhost',
+          'http://siscac.grazcompany.com:8081/',
+          'http://siscac.grazcompany.com',
+          'https://siscac.grazcompany.com:8081/',
+          'https://siscac.grazcompany.com'
+        ],
     },
     configureWebpack: {
         devServer: {
