@@ -8,8 +8,6 @@ module.exports = {
         autoprefixer: {}
     },
     devServer: {
-        host: "localhost",
-        hot: true,
         disableHostCheck: true
     },
     configureWebpack: {
